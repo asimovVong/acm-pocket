@@ -1,4 +1,7 @@
 import importlib.util
+import json
+import os
+import signal
 import socket
 import subprocess
 import sys
@@ -57,6 +60,31 @@ class LauncherTests(unittest.TestCase):
             self.launcher.ensure_server(self.root, self.port)
         self.assertIsNone(proc.poll())
 
+    def test_concurrent_launchers_leave_one_server_running_after_they_exit(self):
+        code = (
+            'import json, sys; from pathlib import Path; '
+            'from launcher import ensure_server; '
+            'url, proc = ensure_server(Path(sys.argv[1]), int(sys.argv[2])); '
+            'print(json.dumps([url, proc.pid if proc else None]))'
+        )
+        children = [subprocess.Popen(
+            [sys.executable, '-X', 'utf8', '-c', code, str(self.root), str(self.port)],
+            cwd=SCRIPT.parent, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            text=True, encoding='utf-8',
+        ) for _ in range(2)]
+        records = []
+        for child in children:
+            output, error = child.communicate(timeout=30)
+            self.assertEqual(child.returncode, 0, error)
+            record = json.loads(output)
+            records.append(record)
+            if record[1]:
+                self.addCleanup(os.kill, record[1], signal.SIGTERM)
+        self.assertEqual(sum(pid is not None for _, pid in records), 1)
+        with self.opener.open(records[0][0], timeout=3) as response:
+            self.assertIn('ACM 练习台', response.read().decode())
+
+    @unittest.skipUnless(sys.platform == 'darwin', 'macOS shell integration')
     def test_install_is_idempotent_and_preserves_existing_command(self):
         home = Path(self.temp.name) / 'home'
         home.mkdir()
@@ -73,6 +101,7 @@ class LauncherTests(unittest.TestCase):
             self.launcher.install_command(home)
         self.assertEqual(target.read_text(), 'existing user command')
 
+    @unittest.skipUnless(sys.platform == 'darwin', 'macOS shell integration')
     def test_install_preserves_existing_bash_login_configuration(self):
         home = Path(self.temp.name) / 'bash-home'
         home.mkdir()
