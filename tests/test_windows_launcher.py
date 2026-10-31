@@ -7,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -70,8 +71,9 @@ class WindowsLauncherTests(unittest.TestCase):
         target = local / 'ACMPocket/bin/acm.cmd'
         self.assertTrue(target.is_file())
         saved_path, _ = self.read_user_path()
-        self.assertIn(str(target.parent), saved_path.split(';'))
-        env['PATH'] = str(target.parent) + os.pathsep + os.environ['PATH']
+        self.assertTrue(any(Path(p).is_dir() and Path(p).samefile(target.parent)
+                            for p in saved_path.split(';')))
+        env['PATH'] = os.environ['PATH'] + os.pathsep + self.winreg.ExpandEnvironmentStrings(saved_path)
         result = self.run_cmd('acm --help', env)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('--install', result.stdout)
@@ -85,8 +87,10 @@ class WindowsLauncherTests(unittest.TestCase):
         self.launcher.install_windows_command(self.bin_dir)
         value, kind = self.read_user_path()
         self.assertEqual(kind, reg.REG_EXPAND_SZ)
-        self.assertEqual(value.split(';'), [*original.split(';'), str(self.bin_dir)])
-        env = dict(os.environ, PATH=str(self.bin_dir) + os.pathsep + os.environ['PATH'])
+        entries = value.split(';')
+        self.assertEqual(entries[:-1], original.split(';'))
+        self.assertTrue(Path(entries[-1]).samefile(self.bin_dir))
+        env = dict(os.environ, PATH=os.environ['PATH'] + os.pathsep + reg.ExpandEnvironmentStrings(value))
         result = self.run_cmd('acm --help', env)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('--no-open', result.stdout)
@@ -99,6 +103,20 @@ class WindowsLauncherTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             self.launcher.install_windows_command(self.bin_dir)
         self.assertEqual(target.read_text(encoding='utf-8'), 'existing command')
+        self.assertEqual(self.read_user_path() if self.original_path else None, before)
+
+    def test_install_refuses_a_different_acm_command_already_on_path(self):
+        existing_bin = Path(self.temp.name) / 'existing-tools'
+        existing_bin.mkdir()
+        target = existing_bin / 'acm.cmd'
+        target.write_bytes(b'@echo existing-user-tool\r\n')
+        before = self.read_user_path() if self.original_path else None
+        with patch.dict(os.environ, PATH=str(existing_bin) + os.pathsep + os.environ['PATH']):
+            with self.assertRaises(RuntimeError):
+                self.launcher.install_windows_command(self.bin_dir)
+            result = self.run_cmd('acm')
+            self.assertEqual(result.stdout.strip(), 'existing-user-tool')
+        self.assertFalse((self.bin_dir / 'acm.cmd').exists())
         self.assertEqual(self.read_user_path() if self.original_path else None, before)
 
 
