@@ -35,6 +35,13 @@ class LauncherTests(unittest.TestCase):
         process.terminate()
         process.wait()
 
+    def stop_detached(self, pid):
+        if os.name == 'nt':
+            subprocess.run(['taskkill', '/F', '/PID', str(pid)], check=True,
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        else:
+            os.kill(pid, signal.SIGTERM)
+
     def test_start_from_path_with_spaces_and_reuse_existing_server(self):
         url, pid = self.launcher.ensure_server(self.root, self.port)
         self.assertIsNotNone(pid)
@@ -79,7 +86,7 @@ class LauncherTests(unittest.TestCase):
             record = json.loads(output)
             records.append(record)
             if record[1]:
-                self.addCleanup(os.kill, record[1], signal.SIGTERM)
+                self.addCleanup(self.stop_detached, record[1])
         self.assertEqual(sum(pid is not None for _, pid in records), 1)
         with self.opener.open(records[0][0], timeout=3) as response:
             self.assertIn('ACM 练习台', response.read().decode())

@@ -29,8 +29,9 @@ def execute_code(code, input_text, output_limit=65536):
     stdin = io.TextIOWrapper(io.BytesIO(input_text.encode("utf-8")), encoding="utf-8")
     output_limit = min(8 * 1024 * 1024, max(1024, int(output_limit)))
     out_buffer, err_buffer = CappedBuffer(output_limit), CappedBuffer(output_limit)
-    stdout = io.TextIOWrapper(out_buffer, encoding="utf-8", write_through=True)
-    stderr = io.TextIOWrapper(err_buffer, encoding="utf-8", write_through=True)
+    # 与浏览器 Pyodide 保持一致，不随宿主系统把换行转换成 CRLF。
+    stdout = io.TextIOWrapper(out_buffer, encoding="utf-8", newline="\n", write_through=True)
+    stderr = io.TextIOWrapper(err_buffer, encoding="utf-8", newline="\n", write_through=True)
     previous = sys.stdin, sys.stdout, sys.stderr, sys.argv
     error = None
     try:

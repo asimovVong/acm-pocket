@@ -22,7 +22,6 @@
 | --- | --- |
 | B 站作者主页：灵茶山艾府 | [space.bilibili.com/206214](https://space.bilibili.com/206214) |
 | B 站「基础算法精讲」合集 | [打开课程合集](https://space.bilibili.com/206214/channel/collectiondetail?sid=842776) |
-| 本项目最初跟学的视频入口 | [相向双指针（二）：盛最多水的容器 / 接雨水，BV1Qg411q7ia](https://www.bilibili.com/video/BV1Qg411q7ia/) |
 | 作者维护的课程配套题单 | [基础算法精讲·题目汇总](https://github.com/EndlessCheng/codeforces-go/blob/master/leetcode/README.md) |
 | 力扣作者主页与题解 | [灵茶山艾府 / endlesscheng](https://leetcode.cn/u/endlesscheng/) |
 
@@ -81,50 +80,57 @@ ACM 模式要求完整的输入输出程序，但各场考试的输入格式并�
 
 ## 快速开始
 
-**macOS：**从 [Releases](https://github.com/asimovVong/acm-pocket/releases/latest) 下载启动包，解压后双击 `启动ACM.command`。需要 macOS、Python 3 和现代浏览器。
+从 [Releases 下载页](https://github.com/asimovVong/acm-pocket/releases/latest) 选择对应系统的 ZIP，**先解压整个文件夹**，再双击启动。需要 Python 3.9+ 和现代浏览器，无需管理员权限，也不用安装 pip/npm 依赖。
 
-想在任意终端输入 `acm`？双击一次 `安装快捷命令.command`，然后新开终端：
+| 系统 | 下载包 | 双击打开练习台 | 安装 `acm` 命令（可选） |
+| --- | --- | --- | --- |
+| Windows 10 / 11 | 文件名以 `Windows.zip` 结尾 | `启动ACM.cmd` | `安装快捷命令.cmd` |
+| macOS | 文件名以 `macOS.zip` 结尾 | `启动ACM.command` | `安装快捷命令.command` |
+
+安装快捷命令后，重新打开终端，在任意目录输入：
 
 ```bash
 acm
 ```
 
-**从源码运行（macOS / Linux / Windows）：**
+第一次运行需要联网加载浏览器中的 Python 环境 Pyodide。**ZIP 包含完整网站和启动器，不包含系统 Python、离线运行时或浏览器中的个人草稿。**
+
+### Windows 安装与打开
+
+1. 若未安装 Python 3.9+，先从 [python.org](https://www.python.org/downloads/windows/) 安装。保留 Python 启动器，或勾选 **Add python.exe to PATH**，让 `py -3` 或 `python` 至少一个命令可用。
+2. 下载 `ACM-Pocket-版本号-Windows.zip`，右键「全部解压」，把整个文件夹放到固定位置，支持中文和空格路径。
+3. 双击 `启动ACM.cmd`，练习台会在默认浏览器打开：<http://127.0.0.1:8765/>。
+4. 想用快捷命令，再双击一次 `安装快捷命令.cmd`。**完全退出 Windows Terminal、PowerShell 或 CMD 后重新打开**，输入 `acm`。如果还识别不到命令，注销并重新登录 Windows。
+
+快捷命令安装到 `%LOCALAPPDATA%\ACMPocket\bin\acm.cmd`，只向当前用户的 PATH 添加目录，保留原有设置。无需管理员权限，不修改 PowerShell 执行策略。安装后保留原文件夹及 Python 安装；移动启动包或更换 Python 位置后，检查并删除旧的这个 `acm.cmd`，再运行新包的安装器。
+
+没有找到 Python 时，启动窗口会提示安装方法并停留；服务端口被其他程序占用时，会提示错误并保留该程序。
+
+### macOS 安装与打开
+
+1. 若未安装 Python 3.9+，先从 [python.org](https://www.python.org/downloads/macos/) 安装。
+2. 下载 `ACM-Pocket-版本号-macOS.zip`，解压到固定位置，双击 `启动ACM.command`。
+3. 想用快捷命令，双击一次 `安装快捷命令.command`，然后新开终端输入 `acm`。
+
+命令安装在 `~/.local/bin/acm`，指向当前文件夹的 `launcher.py`；安装器按需将该目录加入 zsh/bash 的 PATH。安装后请保留此文件夹。若要迁移安装，确认 `~/.local/bin/acm` 是旧包的快捷链接后，只移除该链接，再运行新包的安装器。
+
+### 日常使用
+
+两种系统的一键启动都会检查 `127.0.0.1:8765`：已有练习台就直接打开，未运行则后台启动。**可以关闭启动终端；电脑重启后，再输入 `acm` 或双击启动文件。**
+
+- `acm --no-open`：只启动服务，不打开网页。
+- `acm --help`：查看帮助。
+- 个人草稿和完成进度保存在浏览器中。继续使用同一个浏览器和原地址，可以读取原有草稿；重要代码可以从练习台下载留存。
+
+### 从源码运行（macOS / Linux / Windows）
 
 ```bash
 git clone https://github.com/asimovVong/acm-pocket.git
 cd acm-pocket
-python3 -m http.server 8765 --bind 127.0.0.1
+python3 launcher.py
 ```
 
-打开 <http://127.0.0.1:8765/>。Windows 可将 `python3` 换成 `py -3`。跨平台手动启动时请保持终端运行；一键后台启动器适用于 macOS。
-
-首次运行需要联网加载 Pyodide；无需安装 pip/npm 依赖即可使用网站。**这不是完全离线包，ZIP 也不包含浏览器中的个人草稿。**
-
-## 打开
-
-### 一键启动（macOS）
-
-这个启动包叫 **ACM 随手练**，快捷命令是 **`acm`**。
-
-首次使用：把整个文件夹放到固定位置，双击 `安装快捷命令.command`，然后新开一个终端。
-之后在任意目录输入：
-
-```bash
-acm
-```
-
-自动检查 `127.0.0.1:8765`：已有练习台就直接打开；未运行则后台启动后打开默认浏览器。
-可以关闭启动终端；电脑重启后，再输入 `acm`。也可以直接双击 `启动ACM.command`，不必安装快捷命令。
-若其他程序占用了端口，会提示并保留该程序，不会自动切换地址。
-
-可选命令：`acm --no-open` 只启动服务，`acm --help` 查看帮助。
-命令安装在 `~/.local/bin/acm`，指向当前文件夹的 `launcher.py`；安装器按需将该目录加入 zsh/bash 的 PATH。
-安装后请保留此文件夹。若要迁移安装，确认 `~/.local/bin/acm` 是旧包的快捷链接后，只移除该链接，再运行新包的安装器。
-
-**运行条件：macOS、Python 3、现代浏览器。** 如果没有 Python 3，请先从 python.org 安装。
-包内包含完整网站、题库、参考模板、公司笔试资料和测试；浏览器 Python 运行环境 Pyodide 首次需要联网下载，此包不是离线运行时安装包。
-个人草稿和完成进度保存在浏览器中，不包含在 ZIP 中。继续使用同一个浏览器和原地址，可以读取该浏览器原有的草稿。
+Windows 可将 `python3` 换成 `py -3`。也可以使用下面的静态服务器方式，手动启动时请保持终端运行。
 
 ### 手动启动
 

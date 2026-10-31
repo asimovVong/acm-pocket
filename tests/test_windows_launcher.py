@@ -62,6 +62,20 @@ class WindowsLauncherTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('--no-open', result.stdout)
 
+    def test_installer_entry_makes_acm_available_on_the_saved_path(self):
+        local = Path(self.temp.name) / 'Local AppData'
+        env = dict(os.environ, LOCALAPPDATA=str(local))
+        result = self.run_cmd(f'"{self.package / "安装快捷命令.cmd"}"', env)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        target = local / 'ACMPocket/bin/acm.cmd'
+        self.assertTrue(target.is_file())
+        saved_path, _ = self.read_user_path()
+        self.assertIn(str(target.parent), saved_path.split(';'))
+        env['PATH'] = str(target.parent) + os.pathsep + os.environ['PATH']
+        result = self.run_cmd('acm --help', env)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('--install', result.stdout)
+
     def test_command_preserves_user_path_and_runs_from_another_directory(self):
         reg = self.winreg
         original = r'%USERPROFILE%\original-tools;C:\keep this'

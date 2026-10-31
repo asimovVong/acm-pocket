@@ -10,7 +10,6 @@ ACM Pocket 的原创练习台代码、判题与运行适配器、启动器、测
 
 - 作者：[灵茶山艾府（endlesscheng）](https://leetcode.cn/u/endlesscheng/)。
 - 视频课程：[B 站《基础算法精讲》](https://space.bilibili.com/206214/channel/collectiondetail?sid=842776)。
-- 最初跟学入口：[相向双指针（二）](https://www.bilibili.com/video/BV1Qg411q7ia/)。
 - 配套题单：[EndlessCheng/codeforces-go 的基础算法精讲题目汇总](https://github.com/EndlessCheng/codeforces-go/blob/master/leetcode/README.md)。
 
 `data/references-arrays.json`、`data/references-structures.json`、`data/references-dp.json` 中的每条参考均保留 `author`、`sourceUrl`、`variant` 和 `note`，说明对应作者文章、所选解法与 ACM 适配。原题解及其改编部分保留原作者权利，不包含在本项目原创代码的 MIT 授权中。再次使用时应保留署名和来源，并核对相应来源的许可；需要额外授权的用途须向权利人取得授权。

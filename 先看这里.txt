@@ -1,4 +1,4 @@
-ACM 随手练 · 一键启动包（macOS）
+ACM 随手练 · 一键启动包（Windows / macOS）
 
 为面试和笔试，把灵神的力扣解法练成 ACM 完整程序。
 为了备考而学习灵茶山艾府《基础算法精讲》，掌握力扣解法后，
@@ -8,19 +8,21 @@ ACM 随手练 · 一键启动包（macOS）
 练习台原创代码采用 MIT 许可证；第三方题目、题解与截图保留原作者权利。
 许可范围见 LICENSE 和 THIRD_PARTY_NOTICES.md。
 原课程合集：https://space.bilibili.com/206214/channel/collectiondetail?sid=842776
-最初跟学的视频：https://www.bilibili.com/video/BV1Qg411q7ia/
 作者配套题单：https://github.com/EndlessCheng/codeforces-go/blob/master/leetcode/README.md
 完整来源、定位和适用场景见 README.md。
 
 记住一个命令：acm
 
 一、不想输命令
-双击“启动ACM.command”，自动后台启动并打开练习台。
+Windows：先解压整个包，再双击“启动ACM.cmd”。
+macOS：解压后双击“启动ACM.command”。
+自动后台启动并打开练习台，可以关闭启动窗口。
 
 二、以后在任意终端输入 acm
 1. 把整个文件夹放到一个固定位置。
-2. 双击“安装快捷命令.command”（首次做一次）。
-3. 新开一个终端，输入 acm 并回车。
+2. Windows 双击“安装快捷命令.cmd”；macOS 双击“安装快捷命令.command”。
+3. Windows 完全退出终端应用后重新打开，macOS 新开一个终端，输入 acm 并回车。
+Windows 支持 PowerShell、CMD 和 Windows Terminal；不需要管理员权限。
 
 三、日常使用
 重复运行 acm 不会重复启动服务。
@@ -30,8 +32,10 @@ ACM 随手练 · 一键启动包（macOS）
 
 四、完整包包含什么
 60 道主讲题、253 组练习用例、完整 ACM 参考模板、自由练习、公司笔试资料、网站源码及测试。
-需要 macOS、Python 3、现代浏览器。Python 运行环境首次在浏览器中联网下载，不是完全离线包。
+需要 Windows 10/11 或 macOS、Python 3.9+、现代浏览器。Python 运行环境首次在浏览器中联网下载，不是完全离线包。
 如果没有 Python 3，请先从 python.org 安装。
+Windows 安装时保留 Python 启动器，或勾选 Add python.exe to PATH。
+这个 ZIP 不包含系统 Python 和离线运行时，详细安装步骤见 README.md。
 草稿和进度在浏览器中，不在此压缩包中；请继续使用原来的浏览器与网址。
 安装后保留整个文件夹，不要只移动或删除 launcher.py。
 
