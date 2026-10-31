@@ -54,7 +54,15 @@ class LauncherTests(unittest.TestCase):
 
     def test_unrelated_service_is_not_reused_or_terminated(self):
         (self.root / 'index.html').write_text('another application')
-        proc = subprocess.Popen([sys.executable, '-m', 'http.server', str(self.port), '--bind', '127.0.0.1', '--directory', str(self.root)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # 独立的 HTTP 服务夹具，无主机名解析；这里只验证端口冲突保护。
+        fixture = (
+            'import sys; from http.server import SimpleHTTPRequestHandler; '
+            'from socketserver import TCPServer; from functools import partial; '
+            'TCPServer(("127.0.0.1", int(sys.argv[1])), '
+            'partial(SimpleHTTPRequestHandler, directory=sys.argv[2])).serve_forever()'
+        )
+        proc = subprocess.Popen([sys.executable, '-c', fixture, str(self.port), str(self.root)],
+                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         self.addCleanup(proc.wait)
         self.addCleanup(proc.terminate)
         for _ in range(40):

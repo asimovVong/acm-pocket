@@ -3,6 +3,7 @@
 import argparse
 import os
 from pathlib import Path
+import shutil
 import socket
 import subprocess
 import sys
@@ -14,6 +15,12 @@ import webbrowser
 
 ROOT = Path(__file__).resolve().parent
 TITLE = '<title>ACM 练习台 · Python</title>'.encode('utf-8')
+# 只监听回环地址，不需要主机名。部分 macOS 的反向解析会让 http.server
+# 在 bind 与 listen 之间卡住约 35 秒：actions/runner-images#14409。
+SERVER_BOOTSTRAP = (
+    "import socket, runpy; socket.getfqdn = lambda name='': name; "
+    "runpy.run_module('http.server', run_name='__main__')"
+)
 
 
 def service_state(port):
@@ -58,7 +65,7 @@ def ensure_server(root, port=8765):
             background = {'start_new_session': True}
         with os.fdopen(fd, 'ab', buffering=0) as log:
             process = subprocess.Popen(
-                [sys.executable, '-u', '-m', 'http.server', str(port),
+                [sys.executable, '-u', '-c', SERVER_BOOTSTRAP, str(port),
                  '--bind', '127.0.0.1', '--directory', str(root)],
                 cwd=root, stdin=subprocess.DEVNULL, stdout=log,
                 stderr=subprocess.STDOUT, **background,
@@ -112,6 +119,9 @@ def install_windows_command(bin_dir=None):
         bin_dir = local / 'ACMPocket/bin'
     bin_dir = Path(bin_dir).resolve()
     target = bin_dir / 'acm.cmd'
+    existing = shutil.which('acm')
+    if existing and Path(existing).resolve() != target:
+        raise RuntimeError(f'命令 acm 已被 {existing} 使用，未修改原命令或 PATH。可以继续双击启动ACM.cmd。')
     # 批处理文件内的百分号需转义；禁用延迟展开以支持路径中的感叹号。
     python = str(Path(sys.executable).resolve()).replace('%', '%%')
     script = str(Path(__file__).resolve()).replace('%', '%%')
