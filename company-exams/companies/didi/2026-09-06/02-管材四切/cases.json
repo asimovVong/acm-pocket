@@ -1,0 +1,50 @@
+[
+  {
+    "name": "原文样例 1",
+    "stdin": "5\n4 5 1 2 8\n",
+    "expected": "5",
+    "source": "article"
+  },
+  {
+    "name": "原文样例 2",
+    "stdin": "4\n1 1 1 1\n",
+    "expected": "0",
+    "source": "article"
+  },
+  {
+    "name": "原文样例 3",
+    "stdin": "5\n9 1 1 1 1\n",
+    "expected": "8",
+    "source": "article"
+  },
+  {
+    "name": "恰好四节",
+    "stdin": "4\n4 7 2 9\n",
+    "expected": "7",
+    "source": "local"
+  },
+  {
+    "name": "四段完全相等",
+    "stdin": "8\n1 1 1 1 1 1 1 1\n",
+    "expected": "0",
+    "source": "local"
+  },
+  {
+    "name": "大整数",
+    "stdin": "4\n1000000000 1 1 1\n",
+    "expected": "999999999",
+    "source": "local"
+  },
+  {
+    "name": "切口同样接近一半",
+    "stdin": "6\n1 1 1 1 1 1\n",
+    "expected": "1",
+    "source": "local"
+  },
+  {
+    "name": "价值分行读入",
+    "stdin": "5\n4 5\n1 2 8\n",
+    "expected": "5",
+    "source": "local"
+  }
+]

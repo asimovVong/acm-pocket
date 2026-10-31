@@ -1,0 +1,737 @@
+[
+  {
+    "id": "17",
+    "title": "电话号码的字母组合",
+    "topic": "回溯",
+    "episode": 14,
+    "episodes": [
+      14
+    ],
+    "url": "https://leetcode.cn/problems/letter-combinations-of-a-phone-number/",
+    "statement": "输入仅由 2～9 组成的数字串，每个数字选择一个对应字母，按原数字顺序组成字符串。输出全部不同结果。按键对应为：2→abc，3→def，4→ghi，5→jkl，6→mno，7→pqrs，8→tuv，9→wxyz。",
+    "inputFormat": "一行数字串 digits，长度为 1～4，只含字符 2～9。",
+    "outputFormat": "输出一个 JSON 字符串数组，包含所有组合且不重复；数组内字符串的排列顺序不限。",
+    "starter": "import sys\nimport json\n\n\ndef solve(digits):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    digits = sys.stdin.readline().rstrip(\"\\r\\n\")\n    answer = solve(digits)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "unordered",
+    "cases": [
+      {
+        "name": "单个三字母按键",
+        "stdin": "2\n",
+        "expected": "[\"a\", \"b\", \"c\"]\n"
+      },
+      {
+        "name": "单个四字母按键",
+        "stdin": "9\n",
+        "expected": "[\"w\", \"x\", \"y\", \"z\"]\n"
+      },
+      {
+        "name": "两个按键",
+        "stdin": "23\n",
+        "expected": "[\"ad\", \"ae\", \"af\", \"bd\", \"be\", \"bf\", \"cd\", \"ce\", \"cf\"]\n"
+      }
+    ]
+  },
+  {
+    "id": "78",
+    "title": "子集",
+    "topic": "回溯",
+    "episode": 14,
+    "episodes": [
+      14
+    ],
+    "url": "https://leetcode.cn/problems/subsets/",
+    "statement": "给定元素互不相同的整数数组，输出它的全部子集，包括空集与全集，每个子集只出现一次。子集中元素的先后顺序不影响它代表的集合。",
+    "inputFormat": "第一行整数 n（1 ≤ n ≤ 10）。\n第二行 n 个互不相同的整数 nums[i]（-10 ≤ nums[i] ≤ 10）。",
+    "outputFormat": "输出 JSON 二维整数数组。每个内部数组代表一个子集；子集之间和子集内部的顺序均不限，不能重复或遗漏子集。",
+    "starter": "import sys\nimport json\n\n\ndef solve(nums):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n    answer = solve(nums)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "unordered-nested",
+    "cases": [
+      {
+        "name": "单个零",
+        "stdin": "1\n0\n",
+        "expected": "[[], [0]]\n"
+      },
+      {
+        "name": "包含负数",
+        "stdin": "2\n-1 2\n",
+        "expected": "[[], [-1], [2], [-1, 2]]\n"
+      },
+      {
+        "name": "三个元素",
+        "stdin": "3\n1 2 3\n",
+        "expected": "[[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]\n"
+      }
+    ]
+  },
+  {
+    "id": "131",
+    "title": "分割回文串",
+    "topic": "回溯",
+    "episode": 14,
+    "episodes": [
+      14
+    ],
+    "url": "https://leetcode.cn/problems/palindrome-partitioning/",
+    "statement": "把字符串切成若干个非空且连续的片段，要求每个片段从左向右和从右向左读相同。输出全部分割方案；每个方案中的片段按原串顺序连接后必须恰好得到原串。",
+    "inputFormat": "一行字符串 s，长度为 1～16，只含小写英文字母。",
+    "outputFormat": "输出 JSON 二维字符串数组。每个内部数组是一种分割方案，必须保留片段在原串中的顺序；不同方案的排列顺序不限，不能重复。",
+    "starter": "import sys\nimport json\n\n\ndef solve(s):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    s = sys.stdin.readline().rstrip(\"\\r\\n\")\n    answer = solve(s)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "unordered",
+    "cases": [
+      {
+        "name": "单字符边界",
+        "stdin": "a\n",
+        "expected": "[[\"a\"]]\n"
+      },
+      {
+        "name": "相邻重复字符",
+        "stdin": "aab\n",
+        "expected": "[[\"a\", \"a\", \"b\"], [\"aa\", \"b\"]]\n"
+      },
+      {
+        "name": "整个字符串回文",
+        "stdin": "aba\n",
+        "expected": "[[\"a\", \"b\", \"a\"], [\"aba\"]]\n"
+      },
+      {
+        "name": "只能逐字分割",
+        "stdin": "abc\n",
+        "expected": "[[\"a\", \"b\", \"c\"]]\n"
+      }
+    ]
+  },
+  {
+    "id": "77",
+    "title": "组合",
+    "topic": "回溯",
+    "episode": 15,
+    "episodes": [
+      15
+    ],
+    "url": "https://leetcode.cn/problems/combinations/",
+    "statement": "从整数 1～n 中选出 k 个不同的数，输出所有可能的组合。选取顺序不产生新的组合，每种组合只能出现一次。",
+    "inputFormat": "一行两个整数 n、k，满足 1 ≤ k ≤ n ≤ 20。",
+    "outputFormat": "输出 JSON 二维整数数组，每个内部数组包含一个组合的 k 个数；组合之间和组合内部的顺序均不限，不能重复。",
+    "starter": "import sys\nimport json\n\n\ndef solve(n, k):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n, k = map(int, sys.stdin.readline().split())\n    answer = solve(n, k)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "unordered-nested",
+    "cases": [
+      {
+        "name": "最小范围",
+        "stdin": "1 1\n",
+        "expected": "[[1]]\n"
+      },
+      {
+        "name": "四选二",
+        "stdin": "4 2\n",
+        "expected": "[[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]\n"
+      },
+      {
+        "name": "必须全选",
+        "stdin": "3 3\n",
+        "expected": "[[1, 2, 3]]\n"
+      },
+      {
+        "name": "每次选一个",
+        "stdin": "3 1\n",
+        "expected": "[[1], [2], [3]]\n"
+      }
+    ]
+  },
+  {
+    "id": "216",
+    "title": "组合总和 III",
+    "topic": "回溯",
+    "episode": 15,
+    "episodes": [
+      15
+    ],
+    "url": "https://leetcode.cn/problems/combination-sum-iii/",
+    "statement": "从 1～9 中选出恰好 k 个不同的整数，使它们的和等于 n。输出全部可行组合，每个数字在一个组合中最多出现一次，每种组合只输出一次。",
+    "inputFormat": "一行两个整数 k、n，满足 2 ≤ k ≤ 9，1 ≤ n ≤ 60。",
+    "outputFormat": "输出 JSON 二维整数数组。组合之间与组合内部的顺序均不限，不能重复；无解输出 []。",
+    "starter": "import sys\nimport json\n\n\ndef solve(k, n):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    k, n = map(int, sys.stdin.readline().split())\n    answer = solve(k, n)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "unordered-nested",
+    "cases": [
+      {
+        "name": "最少选两个",
+        "stdin": "2 3\n",
+        "expected": "[[1, 2]]\n"
+      },
+      {
+        "name": "唯一组合",
+        "stdin": "3 7\n",
+        "expected": "[[1, 2, 4]]\n"
+      },
+      {
+        "name": "多个组合",
+        "stdin": "3 9\n",
+        "expected": "[[1, 2, 6], [1, 3, 5], [2, 3, 4]]\n"
+      },
+      {
+        "name": "目标太小",
+        "stdin": "4 1\n",
+        "expected": "[]\n"
+      },
+      {
+        "name": "九个数全部使用",
+        "stdin": "9 45\n",
+        "expected": "[[1, 2, 3, 4, 5, 6, 7, 8, 9]]\n"
+      }
+    ]
+  },
+  {
+    "id": "22",
+    "title": "括号生成",
+    "topic": "回溯",
+    "episode": 15,
+    "episodes": [
+      15
+    ],
+    "url": "https://leetcode.cn/problems/generate-parentheses/",
+    "statement": "使用恰好 n 对圆括号，生成所有合法括号串。合法表示左右括号总数相等，且从左向右的任意前缀中右括号数量不超过左括号数量。",
+    "inputFormat": "一行整数 n（1 ≤ n ≤ 8）。",
+    "outputFormat": "输出 JSON 字符串数组，包含所有合法括号串且不重复，数组内字符串的排列顺序不限。",
+    "starter": "import sys\nimport json\n\n\ndef solve(n):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    answer = solve(n)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "unordered",
+    "cases": [
+      {
+        "name": "一对括号",
+        "stdin": "1\n",
+        "expected": "[\"()\"]\n"
+      },
+      {
+        "name": "两对括号",
+        "stdin": "2\n",
+        "expected": "[\"(())\", \"()()\"]\n"
+      },
+      {
+        "name": "三对括号",
+        "stdin": "3\n",
+        "expected": "[\"((()))\", \"(()())\", \"(())()\", \"()(())\", \"()()()\"]\n"
+      }
+    ]
+  },
+  {
+    "id": "46",
+    "title": "全排列",
+    "topic": "回溯",
+    "episode": 16,
+    "episodes": [
+      16
+    ],
+    "url": "https://leetcode.cn/problems/permutations/",
+    "statement": "给定元素互不相同的整数数组，输出全部排列。每个排列必须使用每个输入元素恰好一次；元素顺序不同就是不同排列。",
+    "inputFormat": "第一行整数 n（1 ≤ n ≤ 6）。\n第二行 n 个互不相同的整数 nums[i]（-10 ≤ nums[i] ≤ 10）。",
+    "outputFormat": "输出 JSON 二维整数数组。不同排列的输出顺序不限，但每个内部数组的元素顺序有意义，不能重复或遗漏排列。",
+    "starter": "import sys\nimport json\n\n\ndef solve(nums):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n    answer = solve(nums)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "unordered",
+    "cases": [
+      {
+        "name": "单个负数",
+        "stdin": "1\n-2\n",
+        "expected": "[[-2]]\n"
+      },
+      {
+        "name": "两个元素",
+        "stdin": "2\n0 1\n",
+        "expected": "[[0, 1], [1, 0]]\n"
+      },
+      {
+        "name": "三个元素",
+        "stdin": "3\n1 2 3\n",
+        "expected": "[[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]\n"
+      }
+    ]
+  },
+  {
+    "id": "51",
+    "title": "N 皇后",
+    "topic": "回溯",
+    "episode": 16,
+    "episodes": [
+      16
+    ],
+    "url": "https://leetcode.cn/problems/n-queens/",
+    "statement": "在 n×n 棋盘放置 n 个皇后，使任意两个皇后不在同一行、同一列或同一条对角线上。输出全部不同的棋盘布局；旋转或镜像后得到的不同棋盘也分别计入。",
+    "inputFormat": "一行整数 n（1 ≤ n ≤ 9）。",
+    "outputFormat": "输出 JSON 二维字符串数组。每个内部数组是一张棋盘，按从上到下的顺序给出 n 行；每行从左到右用 Q 表示皇后、. 表示空格。棋盘之间的顺序不限，棋盘的行顺序必须保留。无解输出 []。",
+    "starter": "import sys\nimport json\n\n\ndef solve(n):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    answer = solve(n)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "unordered",
+    "cases": [
+      {
+        "name": "一格棋盘",
+        "stdin": "1\n",
+        "expected": "[[\"Q\"]]\n"
+      },
+      {
+        "name": "二阶无解",
+        "stdin": "2\n",
+        "expected": "[]\n"
+      },
+      {
+        "name": "四阶两个解",
+        "stdin": "4\n",
+        "expected": "[[\".Q..\", \"...Q\", \"Q...\", \"..Q.\"], [\"..Q.\", \"Q...\", \"...Q\", \".Q..\"]]\n"
+      }
+    ]
+  },
+  {
+    "id": "52",
+    "title": "N 皇后 II",
+    "topic": "回溯",
+    "episode": 16,
+    "episodes": [
+      16
+    ],
+    "url": "https://leetcode.cn/problems/n-queens-ii/",
+    "statement": "在 n×n 棋盘放置 n 个皇后，使任意两个皇后不在同一行、同一列或同一条对角线上。只求不同棋盘布局的总数；旋转或镜像产生的不同棋盘分别计数。",
+    "inputFormat": "一行整数 n（1 ≤ n ≤ 9）。",
+    "outputFormat": "输出一个整数，表示可行棋盘布局的数量。",
+    "starter": "import sys\n\n\ndef solve(n):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    answer = solve(n)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "一格棋盘",
+        "stdin": "1\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "二阶无解",
+        "stdin": "2\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "四阶棋盘",
+        "stdin": "4\n",
+        "expected": "2\n"
+      },
+      {
+        "name": "五阶棋盘",
+        "stdin": "5\n",
+        "expected": "10\n"
+      }
+    ]
+  },
+  {
+    "id": "198",
+    "title": "打家劫舍",
+    "topic": "动态规划",
+    "episode": 17,
+    "episodes": [
+      17
+    ],
+    "url": "https://leetcode.cn/problems/house-robber/",
+    "statement": "一排房屋的存款金额由非负整数数组给出。可以选若干房屋，但不能同时选择相邻房屋。求所选金额之和的最大值。",
+    "inputFormat": "第一行整数 n（1 ≤ n ≤ 100）。\n第二行 n 个整数 nums[i]（0 ≤ nums[i] ≤ 400），按房屋从左到右的顺序给出。",
+    "outputFormat": "输出一个整数，表示可取得的最大金额。",
+    "starter": "import sys\n\n\ndef solve(nums):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n    answer = solve(nums)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "单间且无存款",
+        "stdin": "1\n0\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "两端同时选择",
+        "stdin": "4\n2 1 1 2\n",
+        "expected": "4\n"
+      },
+      {
+        "name": "五间房屋",
+        "stdin": "5\n2 7 9 3 1\n",
+        "expected": "12\n"
+      },
+      {
+        "name": "不固定选择奇偶位置",
+        "stdin": "5\n4 10 3 1 5\n",
+        "expected": "15\n"
+      }
+    ]
+  },
+  {
+    "id": "494",
+    "title": "目标和",
+    "topic": "动态规划",
+    "episode": 18,
+    "episodes": [
+      18
+    ],
+    "url": "https://leetcode.cn/problems/target-sum/",
+    "statement": "给数组每个位置的非负整数独立添加一个 + 或 - 号，所有数都必须使用，按原顺序计算总和。求总和恰好为 target 的符号分配数量。相同数的不同位置分别选择符号，+0 与 -0 也算两种选择。",
+    "inputFormat": "第一行两个整数 n、target（1 ≤ n ≤ 20，-1000 ≤ target ≤ 1000）。\n第二行 n 个非负整数 nums[i]；每个数不超过 1000，数组总和不超过 1000。",
+    "outputFormat": "输出一个整数，表示符合条件的符号分配数量。",
+    "starter": "import sys\n\n\ndef solve(nums, target):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n, target = map(int, sys.stdin.readline().split())\n    nums = list(map(int, sys.stdin.readline().split()))\n    answer = solve(nums, target)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "零的两个符号",
+        "stdin": "1 0\n0\n",
+        "expected": "2\n"
+      },
+      {
+        "name": "负目标值",
+        "stdin": "1 -1\n1\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "重复数按位置计数",
+        "stdin": "5 3\n1 1 1 1 1\n",
+        "expected": "5\n"
+      },
+      {
+        "name": "多个零扩大计数",
+        "stdin": "3 1\n0 0 1\n",
+        "expected": "4\n"
+      },
+      {
+        "name": "无法组成目标",
+        "stdin": "2 0\n1 2\n",
+        "expected": "0\n"
+      }
+    ]
+  },
+  {
+    "id": "322",
+    "title": "零钱兑换",
+    "topic": "动态规划",
+    "episode": 18,
+    "episodes": [
+      18
+    ],
+    "url": "https://leetcode.cn/problems/coin-change/",
+    "statement": "给定若干种正整数硬币面额，每种硬币可使用任意多枚。求恰好凑出 amount 所需的最少硬币枚数；凑不出时输出 -1，金额为 0 时不需要硬币。",
+    "inputFormat": "第一行两个整数 n、amount（1 ≤ n ≤ 12，0 ≤ amount ≤ 10000）。\n第二行 n 个正整数 coins[i]，表示硬币面额（不超过 2^31-1）。",
+    "outputFormat": "输出一个整数，表示最少硬币枚数；无解输出 -1。",
+    "starter": "import sys\n\n\ndef solve(coins, amount):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n, amount = map(int, sys.stdin.readline().split())\n    coins = list(map(int, sys.stdin.readline().split()))\n    answer = solve(coins, amount)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "总金额为零",
+        "stdin": "1 0\n7\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "奇数金额无法组成",
+        "stdin": "1 3\n2\n",
+        "expected": "-1\n"
+      },
+      {
+        "name": "不能只贪心选最大面额",
+        "stdin": "3 6\n1 3 4\n",
+        "expected": "2\n"
+      },
+      {
+        "name": "重复使用同一面额",
+        "stdin": "2 9\n2 5\n",
+        "expected": "3\n"
+      }
+    ]
+  },
+  {
+    "id": "1143",
+    "title": "最长公共子序列",
+    "topic": "动态规划",
+    "episode": 19,
+    "episodes": [
+      19
+    ],
+    "url": "https://leetcode.cn/problems/longest-common-subsequence/",
+    "statement": "求两个字符串的最长公共子序列长度。子序列可以跳过字符，但保留下来的字符必须保持原有先后顺序，不要求连续。若没有公共字符，结果为 0。",
+    "inputFormat": "第一行字符串 text1。\n第二行字符串 text2。\n两个字符串的长度均为 1～1000，只含小写英文字母。",
+    "outputFormat": "输出一个整数，表示最长公共子序列的长度。",
+    "starter": "import sys\n\n\ndef solve(text1, text2):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    text1 = sys.stdin.readline().rstrip(\"\\r\\n\")\n    text2 = sys.stdin.readline().rstrip(\"\\r\\n\")\n    answer = solve(text1, text2)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "单字符相同",
+        "stdin": "a\na\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "跳过中间字符",
+        "stdin": "abcde\nace\n",
+        "expected": "3\n"
+      },
+      {
+        "name": "不能改变字符顺序",
+        "stdin": "ab\nba\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "没有公共字符",
+        "stdin": "abc\nxyz\n",
+        "expected": "0\n"
+      }
+    ]
+  },
+  {
+    "id": "72",
+    "title": "编辑距离",
+    "topic": "动态规划",
+    "episode": 19,
+    "episodes": [
+      19
+    ],
+    "url": "https://leetcode.cn/problems/edit-distance/",
+    "statement": "把 word1 变成 word2，每步可以插入一个字符、删除一个字符，或把一个字符替换成另一个字符，每种操作的代价均为 1。求最少操作次数，字符串可以为空。",
+    "inputFormat": "第一行字符串 word1，第二行字符串 word2。\n每个字符串长度为 0～500，只含小写英文字母；空字符串用一个空行表示，不加引号。",
+    "outputFormat": "输出一个整数，表示最少编辑操作次数。",
+    "starter": "import sys\n\n\ndef solve(word1, word2):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    word1 = sys.stdin.readline().rstrip(\"\\r\\n\")\n    word2 = sys.stdin.readline().rstrip(\"\\r\\n\")\n    answer = solve(word1, word2)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "两个空字符串",
+        "stdin": "\n\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "从空串插入",
+        "stdin": "\nabc\n",
+        "expected": "3\n"
+      },
+      {
+        "name": "全部删除",
+        "stdin": "abc\n\n",
+        "expected": "3\n"
+      },
+      {
+        "name": "包含多种编辑操作",
+        "stdin": "horse\nros\n",
+        "expected": "3\n"
+      },
+      {
+        "name": "替换一个字符",
+        "stdin": "cat\ncut\n",
+        "expected": "1\n"
+      }
+    ]
+  },
+  {
+    "id": "300",
+    "title": "最长递增子序列",
+    "topic": "动态规划",
+    "episode": 20,
+    "episodes": [
+      20
+    ],
+    "url": "https://leetcode.cn/problems/longest-increasing-subsequence/",
+    "statement": "从整数数组中选出一个最长的严格递增子序列，并输出它的长度。可以跳过元素，但不能改变原来的相对顺序；相邻选中值必须严格变大，相等不算递增。",
+    "inputFormat": "第一行整数 n（1 ≤ n ≤ 2500）。\n第二行 n 个整数 nums[i]（-10000 ≤ nums[i] ≤ 10000）。",
+    "outputFormat": "输出一个整数，表示最长严格递增子序列的长度。",
+    "starter": "import sys\n\n\ndef solve(nums):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n    answer = solve(nums)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "单元素边界",
+        "stdin": "1\n8\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "相等不算递增",
+        "stdin": "3\n3 3 3\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "需要跳过元素",
+        "stdin": "8\n10 9 2 5 3 7 101 18\n",
+        "expected": "4\n"
+      },
+      {
+        "name": "包含负数",
+        "stdin": "5\n-2 -1 -3 0 1\n",
+        "expected": "4\n"
+      },
+      {
+        "name": "严格下降",
+        "stdin": "4\n4 3 2 1\n",
+        "expected": "1\n"
+      }
+    ]
+  },
+  {
+    "id": "122",
+    "title": "买卖股票的最佳时机 II",
+    "topic": "动态规划",
+    "episode": 21,
+    "episodes": [
+      21
+    ],
+    "url": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/",
+    "statement": "按时间顺序给出每天股价，可以多次买卖，任何时刻最多持有一股，必须卖出后才能再次买入。允许同一天买卖，不收手续费，也没有冷冻期。开始和结束都不持股，求最大总利润，也可以不交易。",
+    "inputFormat": "第一行整数 n（1 ≤ n ≤ 30000）。\n第二行 n 个整数 prices[i]（0 ≤ prices[i] ≤ 10000），表示每天股价。",
+    "outputFormat": "输出一个整数，表示最大总利润。",
+    "starter": "import sys\n\n\ndef solve(prices):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    prices = list(map(int, sys.stdin.readline().split()))\n    answer = solve(prices)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "只有一天",
+        "stdin": "1\n0\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "可以分两次交易",
+        "stdin": "5\n5 2 6 1 4\n",
+        "expected": "7\n"
+      },
+      {
+        "name": "持续下跌",
+        "stdin": "3\n4 3 1\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "持续上涨",
+        "stdin": "3\n1 2 3\n",
+        "expected": "2\n"
+      }
+    ]
+  },
+  {
+    "id": "309",
+    "title": "买卖股票的最佳时机含冷冻期",
+    "topic": "动态规划",
+    "episode": 21,
+    "episodes": [
+      21
+    ],
+    "url": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/",
+    "statement": "按时间顺序给出每天股价，可以多次买卖且任何时刻最多持有一股。卖出后紧接着的下一天不能买入，再过一天才能买入；没有手续费。开始和结束都不持股，求最大总利润，也可以不交易。",
+    "inputFormat": "第一行整数 n（1 ≤ n ≤ 5000）。\n第二行 n 个整数 prices[i]（0 ≤ prices[i] ≤ 1000），表示每天股价。",
+    "outputFormat": "输出一个整数，表示满足一天冷冻期限制的最大总利润。",
+    "starter": "import sys\n\n\ndef solve(prices):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    prices = list(map(int, sys.stdin.readline().split()))\n    answer = solve(prices)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "只有一天",
+        "stdin": "1\n1\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "冷冻期改变最优选择",
+        "stdin": "5\n1 2 3 0 2\n",
+        "expected": "3\n"
+      },
+      {
+        "name": "只进行一次交易",
+        "stdin": "3\n2 1 4\n",
+        "expected": "3\n"
+      },
+      {
+        "name": "不能连续抓住两个价差",
+        "stdin": "4\n1 2 1 2\n",
+        "expected": "1\n"
+      }
+    ]
+  },
+  {
+    "id": "188",
+    "title": "买卖股票的最佳时机 IV",
+    "topic": "动态规划",
+    "episode": 21,
+    "episodes": [
+      21
+    ],
+    "url": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/",
+    "statement": "按时间顺序给出每天股价，最多完成 k 笔交易，每笔交易由一次买入和之后的一次卖出组成。任何时刻最多持有一股，卖出后才能再次买入；没有手续费和冷冻期。求最大总利润，也可以少做交易或不交易。",
+    "inputFormat": "第一行两个整数 n、k（1 ≤ n ≤ 1000，1 ≤ k ≤ 100）。\n第二行 n 个整数 prices[i]（0 ≤ prices[i] ≤ 1000），表示每天股价。",
+    "outputFormat": "输出一个整数，表示最多 k 笔交易能取得的最大总利润。",
+    "starter": "import sys\n\n\ndef solve(prices, k):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n, k = map(int, sys.stdin.readline().split())\n    prices = list(map(int, sys.stdin.readline().split()))\n    answer = solve(prices, k)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "单日且交易额度很大",
+        "stdin": "1 100\n5\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "允许两笔交易",
+        "stdin": "6 2\n3 2 6 5 0 3\n",
+        "expected": "7\n"
+      },
+      {
+        "name": "同样价格仅限一笔",
+        "stdin": "6 1\n3 2 6 5 0 3\n",
+        "expected": "4\n"
+      },
+      {
+        "name": "交易额度超过所需",
+        "stdin": "4 10\n1 3 2 4\n",
+        "expected": "4\n"
+      }
+    ]
+  },
+  {
+    "id": "516",
+    "title": "最长回文子序列",
+    "topic": "动态规划",
+    "episode": 22,
+    "episodes": [
+      22
+    ],
+    "url": "https://leetcode.cn/problems/longest-palindromic-subsequence/",
+    "statement": "从字符串中保留若干字符，使保留字符按原顺序组成回文串，求能保留的最大字符数。所选字符不要求连续，但不能重新排列；回文串从两端读到的字符序列相同。",
+    "inputFormat": "一行字符串 s，长度为 1～1000，只含小写英文字母。",
+    "outputFormat": "输出一个整数，表示最长回文子序列的长度。",
+    "starter": "import sys\n\n\ndef solve(s):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    s = sys.stdin.readline().rstrip(\"\\r\\n\")\n    answer = solve(s)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "单字符边界",
+        "stdin": "a\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "可跳过中间字符",
+        "stdin": "bbbab\n",
+        "expected": "4\n"
+      },
+      {
+        "name": "偶数长度回文",
+        "stdin": "cbbd\n",
+        "expected": "2\n"
+      },
+      {
+        "name": "字符均不同",
+        "stdin": "abc\n",
+        "expected": "1\n"
+      }
+    ]
+  },
+  {
+    "id": "1039",
+    "title": "多边形三角剖分的最低得分",
+    "topic": "动态规划",
+    "episode": 22,
+    "episodes": [
+      22
+    ],
+    "url": "https://leetcode.cn/problems/minimum-score-triangulation-of-polygon/",
+    "statement": "一个凸 n 边形的顶点按顺时针顺序给出正整数权值。用互不相交的内部对角线把它分成 n-2 个三角形，每个三角形得分为三个顶点权值的乘积。求所有三角形得分之和的最小值。",
+    "inputFormat": "第一行整数 n（3 ≤ n ≤ 50）。\n第二行 n 个整数 values[i]（1 ≤ values[i] ≤ 100），按顶点的顺时针顺序给出，不能重排。",
+    "outputFormat": "输出一个整数，表示三角剖分的最低总得分。",
+    "starter": "import sys\n\n\ndef solve(values):\n    # TODO: 在这里实现算法，并返回答案。\n    raise NotImplementedError(\"请完成 solve 函数\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    values = list(map(int, sys.stdin.readline().split()))\n    answer = solve(values)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "已经是三角形",
+        "stdin": "3\n2 3 4\n",
+        "expected": "24\n"
+      },
+      {
+        "name": "四边形选择对角线",
+        "stdin": "4\n1 2 3 4\n",
+        "expected": "18\n"
+      },
+      {
+        "name": "五个顶点权值相同",
+        "stdin": "5\n1 1 1 1 1\n",
+        "expected": "3\n"
+      },
+      {
+        "name": "六边形",
+        "stdin": "6\n1 3 1 4 1 5\n",
+        "expected": "13\n"
+      }
+    ]
+  }
+]

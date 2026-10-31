@@ -1,0 +1,1016 @@
+[
+  {
+    "id": "206",
+    "title": "反转链表",
+    "topic": "链表",
+    "episode": 6,
+    "episodes": [
+      6
+    ],
+    "url": "https://leetcode.cn/problems/reverse-linked-list/",
+    "statement": "给定一个可为空的单向链表，反转所有 next 指针的方向，返回反转后的头节点。",
+    "inputFormat": "第一行：整数 n，表示节点数。\n第二行：n 个空格分隔的整数，按从头到尾顺序给出节点值；n=0 时第二行为空行。模板据此建立实际的单向链表。",
+    "outputFormat": "输出一行 JSON 数组，按从头到尾的顺序列出结果链表的节点值；空链表输出 []。solve 应返回 ListNode 或 None，模板负责序列化。",
+    "starter": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head):\n    # TODO: 返回结果链表的头节点。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "一般链表",
+        "stdin": "5\n1 2 3 4 5\n",
+        "expected": "[5,4,3,2,1]\n"
+      },
+      {
+        "name": "空链表",
+        "stdin": "0\n\n",
+        "expected": "[]\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "1\n7\n",
+        "expected": "[7]\n"
+      },
+      {
+        "name": "重复值",
+        "stdin": "4\n2 2 -1 3\n",
+        "expected": "[3,-1,2,2]\n"
+      }
+    ]
+  },
+  {
+    "id": "92",
+    "title": "反转链表 II",
+    "topic": "链表",
+    "episode": 6,
+    "episodes": [
+      6
+    ],
+    "url": "https://leetcode.cn/problems/reverse-linked-list-ii/",
+    "statement": "反转单向链表中第 left 到第 right 个节点，区间外的节点顺序不变。位置从 1 开始，保证 1 ≤ left ≤ right ≤ n。通过调整节点连接完成反转。",
+    "inputFormat": "第一行：n left right，n≥1，left/right 为从 1 开始的位置。\n第二行：n 个整数，依次为链表节点值。",
+    "outputFormat": "输出一行 JSON 数组，按从头到尾的顺序列出结果链表的节点值；空链表输出 []。solve 应返回 ListNode 或 None，模板负责序列化。",
+    "starter": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head, left, right):\n    # TODO: 返回结果链表的头节点。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    n, left, right = map(int, sys.stdin.readline().split())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head, left, right)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "内部区间",
+        "stdin": "5 2 4\n1 2 3 4 5\n",
+        "expected": "[1,4,3,2,5]\n"
+      },
+      {
+        "name": "整个链表",
+        "stdin": "3 1 3\n2 4 6\n",
+        "expected": "[6,4,2]\n"
+      },
+      {
+        "name": "单节点区间",
+        "stdin": "1 1 1\n9\n",
+        "expected": "[9]\n"
+      },
+      {
+        "name": "区间含尾部",
+        "stdin": "4 3 4\n1 2 3 4\n",
+        "expected": "[1,2,4,3]\n"
+      }
+    ]
+  },
+  {
+    "id": "25",
+    "title": "K 个一组翻转链表",
+    "topic": "链表",
+    "episode": 6,
+    "episodes": [
+      6
+    ],
+    "url": "https://leetcode.cn/problems/reverse-nodes-in-k-group/",
+    "statement": "把链表从头开始划分为每组 k 个节点，对每个完整组翻转节点连接；最后不足 k 个的节点保持原顺序。保证 1 ≤ k ≤ n，不能只交换节点值。",
+    "inputFormat": "第一行：n k，1≤k≤n。\n第二行：n 个整数，依次为链表节点值。",
+    "outputFormat": "输出一行 JSON 数组，按从头到尾的顺序列出结果链表的节点值；空链表输出 []。solve 应返回 ListNode 或 None，模板负责序列化。",
+    "starter": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head, k):\n    # TODO: 返回结果链表的头节点。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    n, k = map(int, sys.stdin.readline().split())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head, k)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "留有不足一组",
+        "stdin": "5 2\n1 2 3 4 5\n",
+        "expected": "[2,1,4,3,5]\n"
+      },
+      {
+        "name": "一组覆盖全部",
+        "stdin": "3 3\n7 8 9\n",
+        "expected": "[9,8,7]\n"
+      },
+      {
+        "name": "组长为一",
+        "stdin": "3 1\n2 3 4\n",
+        "expected": "[2,3,4]\n"
+      },
+      {
+        "name": "三节点一组",
+        "stdin": "7 3\n1 2 3 4 5 6 7\n",
+        "expected": "[3,2,1,6,5,4,7]\n"
+      }
+    ]
+  },
+  {
+    "id": "876",
+    "title": "链表的中间结点",
+    "topic": "链表",
+    "episode": 7,
+    "episodes": [
+      7
+    ],
+    "url": "https://leetcode.cn/problems/middle-of-the-linked-list/",
+    "statement": "给定非空单向链表，返回中间节点本身。若长度为偶数而有两个中间节点，返回靠后的那个；本地输出用从该节点开始的后缀链表表示。",
+    "inputFormat": "第一行：整数 n（n≥1），表示节点数。\n第二行：n 个空格分隔的整数，按从头到尾顺序给出节点值。模板据此建立实际的单向链表。",
+    "outputFormat": "输出一行 JSON 数组，表示从中间节点到尾节点的所有节点值。solve 返回实际的中间 ListNode，模板序列化其后缀。",
+    "starter": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head):\n    # TODO: 返回中间 ListNode；偶数长度取第二个中间节点。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "奇数长度",
+        "stdin": "5\n1 2 3 4 5\n",
+        "expected": "[3,4,5]\n"
+      },
+      {
+        "name": "偶数长度",
+        "stdin": "6\n1 2 3 4 5 6\n",
+        "expected": "[4,5,6]\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "1\n8\n",
+        "expected": "[8]\n"
+      },
+      {
+        "name": "两个节点",
+        "stdin": "2\n3 9\n",
+        "expected": "[9]\n"
+      }
+    ]
+  },
+  {
+    "id": "141",
+    "title": "环形链表",
+    "topic": "链表",
+    "episode": 7,
+    "episodes": [
+      7
+    ],
+    "url": "https://leetcode.cn/problems/linked-list-cycle/",
+    "statement": "判断给定单向链表是否有环：从头节点反复沿 next 前进，能否再次到达已经访问过的节点。节点值相同并不意味着节点相同。",
+    "inputFormat": "第一行：n pos。n≥0；pos=-1 表示无环，否则 0≤pos<n，表示尾节点的 next 指向原输入中下标为 pos 的节点。n=0 时 pos 必须为 -1。\n第二行：n 个整数，按建链前顺序给出节点值；n=0 时为空行。模板会创建真实的环；solve 只收到 head，不会收到 pos。",
+    "outputFormat": "输出一个整数：有环为 1，无环为 0。solve 返回 bool。",
+    "starter": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head):\n    # TODO: 仅根据 head 判断是否有环，返回 bool。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    n, pos = map(int, sys.stdin.readline().split())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    if pos != -1:\n        if not 0 <= pos < n:\n            raise ValueError(\"pos 超出范围\")\n        nodes[-1].next = nodes[pos]\n    answer = solve(head)\n    print(1 if answer else 0)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "尾部连回中部",
+        "stdin": "4 1\n3 2 0 -4\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "值相同但无环",
+        "stdin": "3 -1\n2 2 2\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "空链表",
+        "stdin": "0 -1\n\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "单节点自环",
+        "stdin": "1 0\n7\n",
+        "expected": "1\n"
+      }
+    ]
+  },
+  {
+    "id": "142",
+    "title": "环形链表 II",
+    "topic": "链表",
+    "episode": 7,
+    "episodes": [
+      7
+    ],
+    "url": "https://leetcode.cn/problems/linked-list-cycle-ii/",
+    "statement": "若链表有环，返回从头开始沿 next 行走时首次进入环的节点；无环则返回 None。不得修改链表。输入中的 pos 只用于搭建测试结构，不是算法参数。",
+    "inputFormat": "第一行：n pos。n≥0；pos=-1 表示无环，否则 0≤pos<n，表示尾节点的 next 指向原输入中下标为 pos 的节点。n=0 时 pos 必须为 -1。\n第二行：n 个整数，按建链前顺序给出节点值；n=0 时为空行。模板会创建真实的环；solve 只收到 head，不会收到 pos。",
+    "outputFormat": "输出入口节点在原输入顺序中的下标（从 0 开始）；无环输出 -1。solve 返回实际入口 ListNode 或 None；模板按节点身份转换成下标，不输出节点值。",
+    "starter": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head):\n    # TODO: 返回环入口 ListNode，无环返回 None；不要修改链表。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    n, pos = map(int, sys.stdin.readline().split())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    if pos != -1:\n        if not 0 <= pos < n:\n            raise ValueError(\"pos 超出范围\")\n        nodes[-1].next = nodes[pos]\n    answer = solve(head)\n    print(-1 if answer is None else nodes.index(answer))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "入口在中间",
+        "stdin": "4 1\n3 2 0 -4\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "入口是头部",
+        "stdin": "3 0\n4 8 6\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "同值但无环",
+        "stdin": "3 -1\n1 1 1\n",
+        "expected": "-1\n"
+      },
+      {
+        "name": "空链表",
+        "stdin": "0 -1\n\n",
+        "expected": "-1\n"
+      },
+      {
+        "name": "同值节点区分身份",
+        "stdin": "4 2\n5 5 5 5\n",
+        "expected": "2\n"
+      }
+    ]
+  },
+  {
+    "id": "143",
+    "title": "重排链表",
+    "topic": "链表",
+    "episode": 7,
+    "episodes": [
+      7
+    ],
+    "url": "https://leetcode.cn/problems/reorder-list/",
+    "statement": "把非空链表 L0→L1→…→L(n-1) 原地重排为 L0→L(n-1)→L1→L(n-2)→…，直到每个节点恰好出现一次。只修改 next 连接，不能通过修改节点值代替重排。",
+    "inputFormat": "第一行：整数 n（n≥1），表示节点数。\n第二行：n 个空格分隔的整数，按从头到尾顺序给出节点值。模板据此建立实际的单向链表。",
+    "outputFormat": "输出一行 JSON 数组，列出重排后的链表值。solve 原地修改链表且无需返回值，模板从原 head 开始序列化。",
+    "starter": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head):\n    # TODO: 原地调整 next；不需要返回值。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    solve(head)\n    print(json.dumps(list_values(head), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "偶数长度",
+        "stdin": "4\n1 2 3 4\n",
+        "expected": "[1,4,2,3]\n"
+      },
+      {
+        "name": "奇数长度",
+        "stdin": "5\n1 2 3 4 5\n",
+        "expected": "[1,5,2,4,3]\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "1\n9\n",
+        "expected": "[9]\n"
+      },
+      {
+        "name": "两个节点",
+        "stdin": "2\n7 8\n",
+        "expected": "[7,8]\n"
+      }
+    ]
+  },
+  {
+    "id": "237",
+    "title": "删除链表中的节点",
+    "topic": "链表",
+    "episode": 8,
+    "episodes": [
+      8
+    ],
+    "url": "https://leetcode.cn/problems/delete-node-in-a-linked-list/",
+    "statement": "只能访问需要删除的节点 node，不能把链表头作为算法参数。链表节点值互不相同，node 不是尾节点。操作后该值从链表消失、节点数减少 1，其余值的前后顺序保持不变。",
+    "inputFormat": "第一行：n index，n≥2，0≤index<n-1；index 是待删节点在原链表中从 0 开始的下标。\n第二行：n 个互不相同的整数，依次为链表节点值。模板建立链表后只把 nodes[index] 传给 solve(node)。",
+    "outputFormat": "输出一行 JSON 数组，列出删除后的完整链表节点值。solve 原地修改且无需返回值；只有 main 为输出保留 head，solve 不应访问它。",
+    "starter": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(node):\n    # TODO: 只能使用传入的 node 删除该值；没有 head 参数，无需返回值。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    n, index = map(int, sys.stdin.readline().split())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    solve(nodes[index])\n    print(json.dumps(list_values(head), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "删除内部节点",
+        "stdin": "4 1\n4 5 1 9\n",
+        "expected": "[4,1,9]\n"
+      },
+      {
+        "name": "删除倒数第二个",
+        "stdin": "4 2\n4 5 1 9\n",
+        "expected": "[4,5,9]\n"
+      },
+      {
+        "name": "最短合法链表",
+        "stdin": "2 0\n7 8\n",
+        "expected": "[8]\n"
+      },
+      {
+        "name": "待删为首节点",
+        "stdin": "3 0\n3 6 9\n",
+        "expected": "[6,9]\n"
+      }
+    ]
+  },
+  {
+    "id": "19",
+    "title": "删除链表的倒数第 N 个结点",
+    "topic": "链表",
+    "episode": 8,
+    "episodes": [
+      8
+    ],
+    "url": "https://leetcode.cn/problems/remove-nth-node-from-end-of-list/",
+    "statement": "删除非空单向链表中倒数第 k 个节点，返回结果头节点。倒数第 1 个是尾节点，保证 1≤k≤n。本地用 n 表示链表长度，用 k 表示原题要删除的倒数位置。",
+    "inputFormat": "第一行：n k，1≤k≤n。\n第二行：n 个整数，依次为链表节点值。",
+    "outputFormat": "输出一行 JSON 数组，按从头到尾的顺序列出结果链表的节点值；空链表输出 []。solve 应返回 ListNode 或 None，模板负责序列化。",
+    "starter": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head, k):\n    # TODO: 返回结果链表的头节点。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    n, k = map(int, sys.stdin.readline().split())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head, k)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "删除倒数第二个",
+        "stdin": "5 2\n1 2 3 4 5\n",
+        "expected": "[1,2,3,5]\n"
+      },
+      {
+        "name": "删空链表",
+        "stdin": "1 1\n3\n",
+        "expected": "[]\n"
+      },
+      {
+        "name": "删除头节点",
+        "stdin": "3 3\n6 7 8\n",
+        "expected": "[7,8]\n"
+      },
+      {
+        "name": "删除尾节点",
+        "stdin": "3 1\n6 7 8\n",
+        "expected": "[6,7]\n"
+      }
+    ]
+  },
+  {
+    "id": "83",
+    "title": "删除排序链表中的重复元素",
+    "topic": "链表",
+    "episode": 8,
+    "episodes": [
+      8
+    ],
+    "url": "https://leetcode.cn/problems/remove-duplicates-from-sorted-list/",
+    "statement": "给定按非递减顺序排列的单向链表，删除多余的重复节点，使每个不同值恰好保留一个节点；结果仍按非递减顺序排列。链表可以为空。",
+    "inputFormat": "第一行：整数 n，表示节点数。\n第二行：n 个空格分隔的整数，按从头到尾顺序给出节点值；n=0 时第二行为空行。模板据此建立实际的单向链表。\n保证第二行的节点值非递减。",
+    "outputFormat": "输出一行 JSON 数组，按从头到尾的顺序列出结果链表的节点值；空链表输出 []。solve 应返回 ListNode 或 None，模板负责序列化。",
+    "starter": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head):\n    # TODO: 返回结果链表的头节点。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "多组重复",
+        "stdin": "5\n1 1 2 3 3\n",
+        "expected": "[1,2,3]\n"
+      },
+      {
+        "name": "空链表",
+        "stdin": "0\n\n",
+        "expected": "[]\n"
+      },
+      {
+        "name": "全相同",
+        "stdin": "4\n2 2 2 2\n",
+        "expected": "[2]\n"
+      },
+      {
+        "name": "均不相同",
+        "stdin": "3\n-3 0 4\n",
+        "expected": "[-3,0,4]\n"
+      }
+    ]
+  },
+  {
+    "id": "82",
+    "title": "删除排序链表中的重复元素 II",
+    "topic": "链表",
+    "episode": 8,
+    "episodes": [
+      8
+    ],
+    "url": "https://leetcode.cn/problems/remove-duplicates-from-sorted-list-ii/",
+    "statement": "给定按非递减顺序排列的单向链表，某个值只要出现了多次，就删除该值对应的所有节点；仅保留在原链表中恰好出现一次的值。链表可以为空。",
+    "inputFormat": "第一行：整数 n，表示节点数。\n第二行：n 个空格分隔的整数，按从头到尾顺序给出节点值；n=0 时第二行为空行。模板据此建立实际的单向链表。\n保证第二行的节点值非递减。",
+    "outputFormat": "输出一行 JSON 数组，按从头到尾的顺序列出结果链表的节点值；空链表输出 []。solve 应返回 ListNode 或 None，模板负责序列化。",
+    "starter": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head):\n    # TODO: 返回结果链表的头节点。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "中部重复组",
+        "stdin": "7\n1 2 3 3 4 4 5\n",
+        "expected": "[1,2,5]\n"
+      },
+      {
+        "name": "开头重复组",
+        "stdin": "5\n1 1 1 2 3\n",
+        "expected": "[2,3]\n"
+      },
+      {
+        "name": "全部被删除",
+        "stdin": "4\n2 2 3 3\n",
+        "expected": "[]\n"
+      },
+      {
+        "name": "空链表",
+        "stdin": "0\n\n",
+        "expected": "[]\n"
+      }
+    ]
+  },
+  {
+    "id": "104",
+    "title": "二叉树的最大深度",
+    "topic": "二叉树",
+    "episode": 9,
+    "episodes": [
+      9
+    ],
+    "url": "https://leetcode.cn/problems/maximum-depth-of-binary-tree/",
+    "statement": "求二叉树的最大深度，即从根到某个叶节点的路径上最多有多少个节点。空树深度为 0。",
+    "inputFormat": "输入一行 JSON 数组，表示二叉树的层序序列，整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。空树写 []。保证是合法序列。",
+    "outputFormat": "输出一个整数，表示最大深度（按节点数计）。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    # TODO: 实现题目要求并返回答案。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "左右深度不同",
+        "stdin": "[3,9,20,null,null,15,7]\n",
+        "expected": "3\n"
+      },
+      {
+        "name": "空树",
+        "stdin": "[]\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "[5]\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "稀疏链",
+        "stdin": "[1,null,2,3]\n",
+        "expected": "3\n"
+      }
+    ]
+  },
+  {
+    "id": "100",
+    "title": "相同的树",
+    "topic": "二叉树",
+    "episode": 10,
+    "episodes": [
+      10
+    ],
+    "url": "https://leetcode.cn/problems/same-tree/",
+    "statement": "判断两棵二叉树是否完全相同：节点的位置和每个位置上的值都必须一致。两棵空树也相同。",
+    "inputFormat": "第一行：第一棵树的 JSON 层序数组。\n第二行：第二棵树的 JSON 层序数组。\n每个数组都遵循以下规则：整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。空树写 []。保证是合法序列。",
+    "outputFormat": "输出一个整数：完全相同为 1，否则为 0。solve 返回 bool。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(p, q):\n    # TODO: 实现题目要求并返回答案。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    p = build_tree(json.loads(sys.stdin.readline()))\n    q = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(p, q)\n    print(1 if answer else 0)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "完全相同",
+        "stdin": "[1,2,3]\n[1,2,3]\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "值相同而位置不同",
+        "stdin": "[1,2]\n[1,null,2]\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "两棵空树",
+        "stdin": "[]\n[]\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "一个值不同",
+        "stdin": "[1,2,3]\n[1,2,4]\n",
+        "expected": "0\n"
+      }
+    ]
+  },
+  {
+    "id": "101",
+    "title": "对称二叉树",
+    "topic": "二叉树",
+    "episode": 10,
+    "episodes": [
+      10
+    ],
+    "url": "https://leetcode.cn/problems/symmetric-tree/",
+    "statement": "判断给定非空二叉树是否关于根节点左右镜像对称。镜像两侧的节点位置和节点值都要对应一致。",
+    "inputFormat": "输入一行 JSON 数组，表示二叉树的层序序列，整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。保证树非空。保证是合法序列。",
+    "outputFormat": "输出一个整数：对称为 1，否则为 0。solve 返回 bool。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    # TODO: 实现题目要求并返回答案。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(1 if answer else 0)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "完整镜像",
+        "stdin": "[1,2,2,3,4,4,3]\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "结构不镜像",
+        "stdin": "[1,2,2,null,3,null,3]\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "[7]\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "对应值不同",
+        "stdin": "[1,2,3]\n",
+        "expected": "0\n"
+      }
+    ]
+  },
+  {
+    "id": "110",
+    "title": "平衡二叉树",
+    "topic": "二叉树",
+    "episode": 10,
+    "episodes": [
+      10
+    ],
+    "url": "https://leetcode.cn/problems/balanced-binary-tree/",
+    "statement": "判断二叉树是否高度平衡：对树中的每一个节点，其左右子树高度差的绝对值都不能超过 1。空树视为平衡。",
+    "inputFormat": "输入一行 JSON 数组，表示二叉树的层序序列，整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。空树写 []。保证是合法序列。",
+    "outputFormat": "输出一个整数：高度平衡为 1，否则为 0。solve 返回 bool。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    # TODO: 实现题目要求并返回答案。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(1 if answer else 0)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "平衡树",
+        "stdin": "[3,9,20,null,null,15,7]\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "深层不平衡",
+        "stdin": "[1,2,2,3,3,null,null,4,4]\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "空树",
+        "stdin": "[]\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "根平衡但子树不平衡",
+        "stdin": "[1,2,3,4,null,null,5,6,null,null,7]\n",
+        "expected": "0\n"
+      }
+    ]
+  },
+  {
+    "id": "199",
+    "title": "二叉树的右视图",
+    "topic": "二叉树",
+    "episode": 10,
+    "episodes": [
+      10
+    ],
+    "url": "https://leetcode.cn/problems/binary-tree-right-side-view/",
+    "statement": "从二叉树右侧观察，每一层只记录最右边能看到的那个节点值，并按从上到下的顺序返回。树可以为空。",
+    "inputFormat": "输入一行 JSON 数组，表示二叉树的层序序列，整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。空树写 []。保证是合法序列。",
+    "outputFormat": "输出一行 JSON 数组，按从根层到最深层列出右视图节点值；空树输出 []。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    # TODO: 实现题目要求并返回答案。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "普通右视图",
+        "stdin": "[1,2,3,null,5,null,4]\n",
+        "expected": "[1,3,4]\n"
+      },
+      {
+        "name": "空树",
+        "stdin": "[]\n",
+        "expected": "[]\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "[8]\n",
+        "expected": "[8]\n"
+      },
+      {
+        "name": "最深节点来自左子树",
+        "stdin": "[1,2,3,4]\n",
+        "expected": "[1,3,4]\n"
+      }
+    ]
+  },
+  {
+    "id": "98",
+    "title": "验证二叉搜索树",
+    "topic": "二叉树",
+    "episode": 11,
+    "episodes": [
+      11
+    ],
+    "url": "https://leetcode.cn/problems/validate-binary-search-tree/",
+    "statement": "判断非空二叉树是否为严格二叉搜索树：每个节点左子树的所有值都小于该节点值，右子树的所有值都大于该节点值，且左右子树也满足相同规则。不允许相等的值。",
+    "inputFormat": "输入一行 JSON 数组，表示二叉树的层序序列，整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。保证树非空。保证是合法序列。",
+    "outputFormat": "输出一个整数：满足二叉搜索树规则为 1，否则为 0。solve 返回 bool。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    # TODO: 实现题目要求并返回答案。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(1 if answer else 0)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "合法搜索树",
+        "stdin": "[2,1,3]\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "跨层违反范围",
+        "stdin": "[5,1,7,null,null,4,8]\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "重复值不合法",
+        "stdin": "[2,2,3]\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "[-7]\n",
+        "expected": "1\n"
+      }
+    ]
+  },
+  {
+    "id": "236",
+    "title": "二叉树的最近公共祖先",
+    "topic": "二叉树",
+    "episode": 12,
+    "episodes": [
+      12
+    ],
+    "url": "https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/",
+    "statement": "在一棵二叉树中，寻找同时拥有 p 和 q 作为后代且深度最大的节点，作为它们的最近公共祖先。节点可以是自己的后代，所以答案可以是 p 或 q 本身。节点值唯一，p/q 不同且一定存在。",
+    "inputFormat": "第一行：非空树的 JSON 层序数组。\n第二行：p_value q_value，表示两个目标节点的值。所有节点值互不相同，两个目标节点不同且都存在。\n树的数组规则：整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。保证树非空。保证是合法序列。",
+    "outputFormat": "输出最近公共祖先的节点值（一个整数）。solve 接收 root、p、q 三个 TreeNode，返回祖先 TreeNode；模板输出其 val。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef find_node(root, value):\n    # 仅把输入的唯一节点值转换为实际节点对象，供 solve 接收 p/q。\n    stack = [root]\n    while stack:\n        node = stack.pop()\n        if node is None:\n            continue\n        if node.val == value:\n            return node\n        stack.extend((node.left, node.right))\n    raise ValueError(\"目标节点不存在\")\n\n\ndef solve(root, p, q):\n    # TODO: 返回最近公共祖先的 TreeNode；p/q 为实际节点对象。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    p_value, q_value = map(int, sys.stdin.readline().split())\n    p = find_node(root, p_value)\n    q = find_node(root, q_value)\n    answer = solve(root, p, q)\n    print(answer.val)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "分居左右子树",
+        "stdin": "[3,5,1,6,2,0,8,null,null,7,4]\n5 1\n",
+        "expected": "3\n"
+      },
+      {
+        "name": "祖先也是目标",
+        "stdin": "[3,5,1,6,2,0,8,null,null,7,4]\n5 4\n",
+        "expected": "5\n"
+      },
+      {
+        "name": "最短合法树",
+        "stdin": "[1,2]\n1 2\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "同一深层分支",
+        "stdin": "[3,5,1,6,2,0,8,null,null,7,4]\n7 4\n",
+        "expected": "2\n"
+      }
+    ]
+  },
+  {
+    "id": "235",
+    "title": "二叉搜索树的最近公共祖先",
+    "topic": "二叉树",
+    "episode": 12,
+    "episodes": [
+      12
+    ],
+    "url": "https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/",
+    "statement": "在一棵严格二叉搜索树中寻找两个目标节点的最近公共祖先，即包含二者且深度最大的共同祖先。节点也算自己的后代。所有节点值互不相同，两个目标节点不同且都存在。",
+    "inputFormat": "第一行：非空树的 JSON 层序数组。\n第二行：p_value q_value，表示两个目标节点的值。所有节点值互不相同，两个目标节点不同且都存在。\n树的数组规则：整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。保证树非空。保证是合法序列。\n额外保证输入是一棵严格二叉搜索树。",
+    "outputFormat": "输出最近公共祖先的节点值（一个整数）。solve 接收 root、p、q 三个 TreeNode，返回祖先 TreeNode；模板输出其 val。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef find_node(root, value):\n    # 仅把输入的唯一节点值转换为实际节点对象，供 solve 接收 p/q。\n    stack = [root]\n    while stack:\n        node = stack.pop()\n        if node is None:\n            continue\n        if node.val == value:\n            return node\n        stack.extend((node.left, node.right))\n    raise ValueError(\"目标节点不存在\")\n\n\ndef solve(root, p, q):\n    # TODO: 返回最近公共祖先的 TreeNode；p/q 为实际节点对象。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    p_value, q_value = map(int, sys.stdin.readline().split())\n    p = find_node(root, p_value)\n    q = find_node(root, q_value)\n    answer = solve(root, p, q)\n    print(answer.val)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "跨根的两侧",
+        "stdin": "[6,2,8,0,4,7,9,null,null,3,5]\n2 8\n",
+        "expected": "6\n"
+      },
+      {
+        "name": "目标即祖先",
+        "stdin": "[6,2,8,0,4,7,9,null,null,3,5]\n2 4\n",
+        "expected": "2\n"
+      },
+      {
+        "name": "最短合法树",
+        "stdin": "[2,1]\n2 1\n",
+        "expected": "2\n"
+      },
+      {
+        "name": "右子树内部",
+        "stdin": "[6,2,8,0,4,7,9,null,null,3,5]\n9 7\n",
+        "expected": "8\n"
+      }
+    ]
+  },
+  {
+    "id": "102",
+    "title": "二叉树的层序遍历",
+    "topic": "二叉树",
+    "episode": 13,
+    "episodes": [
+      13
+    ],
+    "url": "https://leetcode.cn/problems/binary-tree-level-order-traversal/",
+    "statement": "按层遍历二叉树，从根所在层开始，每层按从左到右的顺序收集节点值，返回各层组成的数组。空树返回空数组。",
+    "inputFormat": "输入一行 JSON 数组，表示二叉树的层序序列，整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。空树写 []。保证是合法序列。",
+    "outputFormat": "输出一行嵌套 JSON 数组，外层从上到下，每个子数组从左到右列出一层的节点值；空树输出 []。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    # TODO: 实现题目要求并返回答案。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "多层树",
+        "stdin": "[3,9,20,null,null,15,7]\n",
+        "expected": "[[3],[9,20],[15,7]]\n"
+      },
+      {
+        "name": "空树",
+        "stdin": "[]\n",
+        "expected": "[]\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "[1]\n",
+        "expected": "[[1]]\n"
+      },
+      {
+        "name": "稀疏树",
+        "stdin": "[1,null,2,3]\n",
+        "expected": "[[1],[2],[3]]\n"
+      }
+    ]
+  },
+  {
+    "id": "103",
+    "title": "二叉树的锯齿形层序遍历",
+    "topic": "二叉树",
+    "episode": 13,
+    "episodes": [
+      13
+    ],
+    "url": "https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/",
+    "statement": "逐层遍历二叉树：根所在的第 1 层从左到右，第 2 层从右到左，之后各层交替方向。每一层单独组成数组，空树返回空数组。",
+    "inputFormat": "输入一行 JSON 数组，表示二叉树的层序序列，整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。空树写 []。保证是合法序列。",
+    "outputFormat": "输出一行嵌套 JSON 数组，外层从上到下；奇数层从左到右，偶数层从右到左。根为第 1 层，空树输出 []。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    # TODO: 实现题目要求并返回答案。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "奇偶层交替",
+        "stdin": "[3,9,20,null,null,15,7]\n",
+        "expected": "[[3],[20,9],[15,7]]\n"
+      },
+      {
+        "name": "空树",
+        "stdin": "[]\n",
+        "expected": "[]\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "[2]\n",
+        "expected": "[[2]]\n"
+      },
+      {
+        "name": "完整三层",
+        "stdin": "[1,2,3,4,5,6,7]\n",
+        "expected": "[[1],[3,2],[4,5,6,7]]\n"
+      }
+    ]
+  },
+  {
+    "id": "513",
+    "title": "找树左下角的值",
+    "topic": "二叉树",
+    "episode": 13,
+    "episodes": [
+      13
+    ],
+    "url": "https://leetcode.cn/problems/find-bottom-left-tree-value/",
+    "statement": "在一棵非空二叉树中找到最深一层的最左侧节点，并返回它的值。这里的最左侧是在该层节点从左到右的排列中排第一。",
+    "inputFormat": "输入一行 JSON 数组，表示二叉树的层序序列，整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。保证树非空。保证是合法序列。",
+    "outputFormat": "输出一个整数，表示最深一层最左侧节点的值。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    # TODO: 实现题目要求并返回答案。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "最底层有两点",
+        "stdin": "[2,1,3]\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "[9]\n",
+        "expected": "9\n"
+      },
+      {
+        "name": "最深节点在右子树",
+        "stdin": "[1,2,3,4,null,5,6,null,null,7]\n",
+        "expected": "7\n"
+      },
+      {
+        "name": "仅有右链",
+        "stdin": "[1,null,2,null,3]\n",
+        "expected": "3\n"
+      }
+    ]
+  },
+  {
+    "id": "543",
+    "title": "二叉树的直径",
+    "topic": "二叉树",
+    "episode": 23,
+    "episodes": [
+      23
+    ],
+    "url": "https://leetcode.cn/problems/diameter-of-binary-tree/",
+    "statement": "二叉树中任意两个节点之间都有唯一的简单路径。求所有这类路径中最多包含多少条边，路径不一定经过根。输入树非空，单节点树的直径为 0。",
+    "inputFormat": "输入一行 JSON 数组，表示二叉树的层序序列，整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。保证树非空。保证是合法序列。",
+    "outputFormat": "输出一个整数，表示直径的边数；注意不是节点数。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    # TODO: 实现题目要求并返回答案。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "路径经过根",
+        "stdin": "[1,2,3,4,5]\n",
+        "expected": "3\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "[8]\n",
+        "expected": "0\n"
+      },
+      {
+        "name": "链状树",
+        "stdin": "[1,null,2,null,3,null,4]\n",
+        "expected": "3\n"
+      },
+      {
+        "name": "最长路径不经过根",
+        "stdin": "[0,1,null,2,3,4,null,null,5]\n",
+        "expected": "4\n"
+      }
+    ]
+  },
+  {
+    "id": "124",
+    "title": "二叉树中的最大路径和",
+    "topic": "二叉树",
+    "episode": 23,
+    "episodes": [
+      23
+    ],
+    "url": "https://leetcode.cn/problems/binary-tree-maximum-path-sum/",
+    "statement": "在非空二叉树中选择一条至少含一个节点的简单路径，使路径上的节点值之和最大。相邻节点必须有边相连，节点不能重复，路径不必经过根，也不必从根走到叶。节点值可能为负。",
+    "inputFormat": "输入一行 JSON 数组，表示二叉树的层序序列，整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。保证树非空。保证是合法序列。",
+    "outputFormat": "输出一个整数，表示最大路径和；不能用空路径的 0 代替全负树中的答案。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    # TODO: 实现题目要求并返回答案。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "最大路径在子树",
+        "stdin": "[-10,9,20,null,null,15,7]\n",
+        "expected": "42\n"
+      },
+      {
+        "name": "单个负节点",
+        "stdin": "[-3]\n",
+        "expected": "-3\n"
+      },
+      {
+        "name": "全负树",
+        "stdin": "[-5,-2,-8]\n",
+        "expected": "-2\n"
+      },
+      {
+        "name": "连接左右分支",
+        "stdin": "[1,2,3]\n",
+        "expected": "6\n"
+      }
+    ]
+  },
+  {
+    "id": "2246",
+    "title": "相邻字符不同的最长路径",
+    "topic": "二叉树",
+    "episode": 23,
+    "episodes": [
+      23
+    ],
+    "url": "https://leetcode.cn/problems/longest-path-with-different-adjacent-characters/",
+    "statement": "给定以节点 0 为根的一般树（不限定为二叉树）及每个节点的字符。寻找一条简单路径，使路径上每条边两端的字符都不同，并让路径包含的节点数最多。路径不必经过根，任意单节点都是合法路径。此题按课程的树形算法章节归类。",
+    "inputFormat": "第一行：整数 n，1≤n≤100000。\n第二行：n 个整数 parent[0]…parent[n-1]，parent[0]=-1，其余 parent[i] 表示节点 i 的父节点，保证形成一棵合法树；不要假定 parent[i]<i。\n第三行：长度为 n 的小写英文字母字符串 s，s[i] 是节点 i 的字符。\n本题是一般树，使用 parent 数组输入，不使用二叉树的 JSON 层序格式。",
+    "outputFormat": "输出一个整数，表示最长合法路径的节点数（不是边数）。",
+    "starter": "import sys\n\nsys.setrecursionlimit(1_000_000)\n\n\ndef solve(parent, s):\n    # TODO: parent 表示一般树（每个节点可有多个孩子），返回最长路径的节点数。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    parent = list(map(int, sys.stdin.readline().split()))\n    s = sys.stdin.readline().strip()\n    if len(parent) != n or len(s) != n:\n        raise ValueError(\"parent 与 s 的长度都应为 n\")\n    answer = solve(parent, s)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "多分支字符筛选",
+        "stdin": "6\n-1 0 0 1 1 2\nabacbe\n",
+        "expected": "3\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "1\n-1\nz\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "所有字符相同",
+        "stdin": "4\n-1 0 1 2\naaaa\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "整条链可用",
+        "stdin": "4\n-1 0 1 2\nabab\n",
+        "expected": "4\n"
+      },
+      {
+        "name": "父编号大于子编号",
+        "stdin": "4\n-1 3 0 2\nabba\n",
+        "expected": "4\n"
+      }
+    ]
+  },
+  {
+    "id": "337",
+    "title": "打家劫舍 III",
+    "topic": "二叉树",
+    "episode": 24,
+    "episodes": [
+      24
+    ],
+    "url": "https://leetcode.cn/problems/house-robber-iii/",
+    "statement": "每个二叉树节点是一间房屋，节点值是其中的非负金额。选择一些节点使金额总和最大，但不能同时选择有直接父子关系的两个节点。允许一个节点都不选，输入树非空。",
+    "inputFormat": "输入一行 JSON 数组，表示二叉树的层序序列，整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。保证树非空。保证是合法序列。\n所有节点值均为非负整数。",
+    "outputFormat": "输出一个整数，表示能取得的最大金额。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    # TODO: 实现题目要求并返回答案。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "隔层取值更好",
+        "stdin": "[3,2,3,null,3,null,1]\n",
+        "expected": "7\n"
+      },
+      {
+        "name": "选择左右孩子",
+        "stdin": "[3,4,5,1,3,null,1]\n",
+        "expected": "9\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "[7]\n",
+        "expected": "7\n"
+      },
+      {
+        "name": "全零金额",
+        "stdin": "[0,0,0]\n",
+        "expected": "0\n"
+      }
+    ]
+  },
+  {
+    "id": "968",
+    "title": "监控二叉树",
+    "topic": "二叉树",
+    "episode": 25,
+    "episodes": [
+      25
+    ],
+    "url": "https://leetcode.cn/problems/binary-tree-cameras/",
+    "statement": "在非空二叉树的一些节点安装摄像头。每个摄像头覆盖安装节点、它的父节点和它的直接孩子。求覆盖整棵树全部节点所需的最少摄像头数量。所有节点值均为 0，值本身不影响覆盖。",
+    "inputFormat": "输入一行 JSON 数组，表示二叉树的层序序列，整数为节点值，null 表示缺失孩子。按队列依次给每个非空节点分配左、右孩子，null 不入队；末尾的 null 可以省略。例如 [1,null,2,3] 表示 1 的右孩子是 2，2 的左孩子是 3。保证树非空。保证是合法序列。\n所有节点值均为 0。",
+    "outputFormat": "输出一个整数，表示覆盖所有节点所需的最少摄像头数。",
+    "starter": "import json\nimport sys\nfrom collections import deque\n\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    # TODO: 实现题目要求并返回答案。\n    raise NotImplementedError(\"请在 solve 中完成算法\")\n\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "一个摄像头覆盖分支",
+        "stdin": "[0,0,null,0,0]\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "单节点",
+        "stdin": "[0]\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "三节点一层",
+        "stdin": "[0,0,0]\n",
+        "expected": "1\n"
+      },
+      {
+        "name": "四节点链",
+        "stdin": "[0,null,0,null,0,null,0]\n",
+        "expected": "2\n"
+      },
+      {
+        "name": "完整三层",
+        "stdin": "[0,0,0,0,0,0,0]\n",
+        "expected": "2\n"
+      }
+    ]
+  }
+]

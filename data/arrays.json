@@ -1,0 +1,539 @@
+[
+  {
+    "id": "167",
+    "title": "两数之和 II - 输入有序数组",
+    "topic": "双指针",
+    "episode": 1,
+    "episodes": [
+      1
+    ],
+    "url": "https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/",
+    "statement": "给定一个按非递减顺序排列的整数数组 numbers 和目标值 target，找出两个不同位置上的数，使其和等于 target。输入保证恰好有一组答案。输出两个位置的下标，下标从 1 开始，较小下标在前。算法要求只使用 O(1) 额外空间。",
+    "inputFormat": "第一行：两个整数 n target，n ≥ 2。\n第二行：n 个整数 numbers，按非递减顺序排列，保证有且只有一对下标满足条件。",
+    "outputFormat": "输出一行 JSON 数组 [i, j]，1 ≤ i < j ≤ n，numbers[i - 1] + numbers[j - 1] = target。",
+    "starter": "import json\nimport sys\n\n\ndef solve():\n    n, target = map(int, sys.stdin.readline().split())\n    numbers = list(map(int, sys.stdin.readline().split()))\n\n    answer = []  # 占位值，请用你的算法计算答案\n    # 在这里编写算法，将结果保存到 answer\n\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "样例 1 · 两端之间的答案",
+        "stdin": "5 6\n-5 -2 0 3 8\n",
+        "expected": "[2, 5]"
+      },
+      {
+        "name": "边界 1 · 只有两个数",
+        "stdin": "2 3\n-2 5\n",
+        "expected": "[1, 2]"
+      },
+      {
+        "name": "样例 2 · 相同数值的不同位置",
+        "stdin": "4 4\n1 2 2 6\n",
+        "expected": "[2, 3]"
+      },
+      {
+        "name": "样例 3 · 负数目标",
+        "stdin": "4 -10\n-9 -6 -1 4\n",
+        "expected": "[1, 3]"
+      }
+    ]
+  },
+  {
+    "id": "15",
+    "title": "三数之和",
+    "topic": "双指针",
+    "episode": 1,
+    "episodes": [
+      1
+    ],
+    "url": "https://leetcode.cn/problems/3sum/",
+    "statement": "给定整数数组 nums，找出所有和为 0 的三元组。每个三元组必须使用三个不同下标，但下标处的数值可以相同。输出的是数值而非下标；相同的数值组合只保留一次。三元组之间和各三元组内部的顺序不限。",
+    "inputFormat": "第一行：整数 n，n ≥ 3。\n第二行：n 个整数 nums，可包含负数、0 和重复值。",
+    "outputFormat": "输出一行 JSON 二维数组，每个子数组是一个长度为 3 的数值组合。无答案输出 []；不得包含重复组合。",
+    "starter": "import json\nimport sys\n\n\ndef solve():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    answer = []  # 占位值，请用你的算法计算答案\n    # 在这里编写算法，将结果保存到 answer\n\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "judge": "unordered-nested",
+    "cases": [
+      {
+        "name": "样例 1 · 去除重复组合",
+        "stdin": "5\n-2 0 0 2 2\n",
+        "expected": "[[-2, 0, 2]]"
+      },
+      {
+        "name": "边界 1 · 没有三元组",
+        "stdin": "3\n1 2 4\n",
+        "expected": "[]"
+      },
+      {
+        "name": "边界 2 · 多个零只保留一组",
+        "stdin": "4\n0 0 0 0\n",
+        "expected": "[[0, 0, 0]]"
+      },
+      {
+        "name": "样例 2 · 三种组合",
+        "stdin": "6\n-3 -1 0 1 2 4\n",
+        "expected": "[[-3, -1, 4], [-3, 1, 2], [-1, 0, 1]]"
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "title": "盛最多水的容器",
+    "topic": "双指针",
+    "episode": 2,
+    "episodes": [
+      2
+    ],
+    "url": "https://leetcode.cn/problems/container-with-most-water/",
+    "statement": "数组 height 的第 i 个非负整数表示横坐标 i 处竖线的高度，相邻竖线的间距为 1。任选两条竖线，与横轴围成不倾斜的容器，求最大盛水量。选 i < j 时，水量为 (j - i) × min(height[i], height[j])。",
+    "inputFormat": "第一行：整数 n，n ≥ 2。\n第二行：n 个非负整数 height。",
+    "outputFormat": "输出一个整数，表示两条竖线能围成的最大容积。",
+    "starter": "import sys\n\n\ndef solve():\n    n = int(sys.stdin.readline())\n    height = list(map(int, sys.stdin.readline().split()))\n\n    answer = 0  # 占位值，请用你的算法计算答案\n    # 在这里编写算法，将结果保存到 answer\n\n    print(answer)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "样例 1 · 内侧较高的竖线",
+        "stdin": "5\n2 5 4 1 3\n",
+        "expected": "9"
+      },
+      {
+        "name": "边界 1 · 两条零高度竖线",
+        "stdin": "2\n0 0\n",
+        "expected": "0"
+      },
+      {
+        "name": "边界 2 · 只有两条竖线",
+        "stdin": "2\n4 4\n",
+        "expected": "4"
+      },
+      {
+        "name": "样例 2 · 最远两条线",
+        "stdin": "4\n6 1 1 6\n",
+        "expected": "18"
+      }
+    ]
+  },
+  {
+    "id": "42",
+    "title": "接雨水",
+    "topic": "双指针",
+    "episode": 2,
+    "episodes": [
+      2,
+      26
+    ],
+    "url": "https://leetcode.cn/problems/trapping-rain-water/",
+    "statement": "给定非负整数数组 height，表示依次相邻、宽度均为 1 的柱子高度。雨后低处可以被两侧的柱子挡住而积水，水会从没有阻挡的边缘流走。求所有位置可积水量的总和。",
+    "inputFormat": "第一行：整数 n，n ≥ 1。\n第二行：n 个非负整数 height。",
+    "outputFormat": "输出一个整数，表示全部柱子之间能接住的雨水总量。",
+    "starter": "import sys\n\n\ndef solve():\n    n = int(sys.stdin.readline())\n    height = list(map(int, sys.stdin.readline().split()))\n\n    answer = 0  # 占位值，请用你的算法计算答案\n    # 在这里编写算法，将结果保存到 answer\n\n    print(answer)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "样例 1 · 多个凹槽",
+        "stdin": "5\n3 0 2 0 4\n",
+        "expected": "7"
+      },
+      {
+        "name": "边界 1 · 等高柱子",
+        "stdin": "3\n2 2 2\n",
+        "expected": "0"
+      },
+      {
+        "name": "边界 2 · 单根柱子",
+        "stdin": "1\n9\n",
+        "expected": "0"
+      },
+      {
+        "name": "样例 2 · 两端低处不存水",
+        "stdin": "5\n0 2 0 2 0\n",
+        "expected": "2"
+      }
+    ]
+  },
+  {
+    "id": "209",
+    "title": "长度最小的子数组",
+    "topic": "滑动窗口",
+    "episode": 3,
+    "episodes": [
+      3
+    ],
+    "url": "https://leetcode.cn/problems/minimum-size-subarray-sum/",
+    "statement": "给定正整数数组 nums 和正整数 target，找出元素和大于或等于 target 的连续非空子数组，并输出这些子数组中的最小长度。如果没有满足条件的子数组，输出 0。",
+    "inputFormat": "第一行：两个整数 n target，n ≥ 1，target > 0。\n第二行：n 个正整数 nums。注意第一行顺序是 n 在前、target 在后。",
+    "outputFormat": "输出一个整数，表示最短连续子数组的长度；不存在时输出 0。",
+    "starter": "# 第一行：n target；第二行：n 个正整数\nimport sys\n\n\ndef solve():\n    n, target = map(int, sys.stdin.readline().split())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    ans = float('inf')  # 不需要导入任何库\n\n    # 在这里完成你的滑动窗口算法\n\n    print(0 if ans == float('inf') else ans)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "样例 1 · 常规窗口",
+        "stdin": "6 7\n2 3 1 2 4 3\n",
+        "expected": "2"
+      },
+      {
+        "name": "样例 2 · 单个元素达标",
+        "stdin": "3 4\n1 4 4\n",
+        "expected": "1"
+      },
+      {
+        "name": "样例 3 · 不存在答案",
+        "stdin": "8 11\n1 1 1 1 1 1 1 1\n",
+        "expected": "0"
+      },
+      {
+        "name": "边界 1 · 数组只有一个元素",
+        "stdin": "1 7\n7\n",
+        "expected": "1"
+      },
+      {
+        "name": "边界 2 · 必须使用整个数组",
+        "stdin": "5 15\n1 2 3 4 5\n",
+        "expected": "5"
+      },
+      {
+        "name": "边界 3 · 需要多次收缩窗口",
+        "stdin": "6 11\n1 2 3 4 5 6\n",
+        "expected": "2"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "title": "无重复字符的最长子串",
+    "topic": "滑动窗口",
+    "episode": 3,
+    "episodes": [
+      3
+    ],
+    "url": "https://leetcode.cn/problems/longest-substring-without-repeating-characters/",
+    "statement": "给定字符串 s，求不含重复字符的最长连续子串的长度。子串中的字符必须在原字符串中连续，空格也算字符；字母区分大小写。空字符串的答案为 0。",
+    "inputFormat": "输入一整行字符串 s，不带引号；可含英文字母、数字、符号和空格。\n空字符串用一个空行表示。行首和行尾空格属于字符串，不应删除，只去掉行末换行符。",
+    "outputFormat": "输出一个整数，表示最长无重复字符子串的长度。",
+    "starter": "import sys\n\n\ndef solve():\n    s = sys.stdin.readline().rstrip('\\r\\n')  # 保留行首和行尾空格\n\n    answer = 0  # 占位值，请用你的算法计算答案\n    # 在这里编写算法，将结果保存到 answer\n\n    print(answer)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "样例 1 · 重复字符跨过窗口",
+        "stdin": "abba\n",
+        "expected": "2"
+      },
+      {
+        "name": "样例 2 · 空格也是字符",
+        "stdin": "a b a\n",
+        "expected": "3"
+      },
+      {
+        "name": "边界 1 · 空字符串",
+        "stdin": "\n",
+        "expected": "0"
+      },
+      {
+        "name": "样例 3 · 最长子串在后段",
+        "stdin": "xyzzxy\n",
+        "expected": "3"
+      },
+      {
+        "name": "边界 2 · 整行只有空格",
+        "stdin": "     \n",
+        "expected": "1"
+      },
+      {
+        "name": "样例 4 · 所有字符都不同",
+        "stdin": "ab!12\n",
+        "expected": "5"
+      }
+    ]
+  },
+  {
+    "id": "713",
+    "title": "乘积小于 K 的子数组",
+    "topic": "滑动窗口",
+    "episode": 3,
+    "episodes": [
+      3
+    ],
+    "url": "https://leetcode.cn/problems/subarray-product-less-than-k/",
+    "statement": "给定正整数数组 nums 和非负整数 k，统计元素乘积严格小于 k 的连续非空子数组个数。即使数值相同，只要起止下标不同，就计为不同子数组；乘积等于 k 不计入答案。",
+    "inputFormat": "第一行：两个整数 n k，n ≥ 1，k ≥ 0。\n第二行：n 个正整数 nums。",
+    "outputFormat": "输出一个整数，表示乘积严格小于 k 的连续非空子数组个数。",
+    "starter": "import sys\n\n\ndef solve():\n    n, k = map(int, sys.stdin.readline().split())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    answer = 0  # 占位值，请用你的算法计算答案\n    # 在这里编写算法，将结果保存到 answer\n\n    print(answer)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "样例 1 · 单个和相邻两个都达标",
+        "stdin": "3 13\n2 3 4\n",
+        "expected": "5"
+      },
+      {
+        "name": "边界 1 · 所有子数组都达标",
+        "stdin": "3 2\n1 1 1\n",
+        "expected": "6"
+      },
+      {
+        "name": "边界 2 · 乘积恰好等于 k",
+        "stdin": "1 2\n2\n",
+        "expected": "0"
+      },
+      {
+        "name": "边界 3 · k 等于 1",
+        "stdin": "3 1\n1 2 3\n",
+        "expected": "0"
+      },
+      {
+        "name": "边界 4 · k 等于 0",
+        "stdin": "3 0\n1 2 3\n",
+        "expected": "0"
+      }
+    ]
+  },
+  {
+    "id": "34",
+    "title": "在排序数组中查找元素的第一个和最后一个位置",
+    "topic": "二分查找",
+    "episode": 4,
+    "episodes": [
+      4
+    ],
+    "url": "https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/",
+    "statement": "给定按非递减顺序排列的整数数组 nums 和整数 target，找出 target 首次和最后一次出现的下标，下标从 0 开始。若不存在 target，输出 [-1, -1]。数组允许为空，算法要求时间复杂度 O(log n)。",
+    "inputFormat": "第一行：两个整数 n target，n ≥ 0。\n第二行：n 个按非递减顺序排列的整数 nums；n = 0 时第二行留空。",
+    "outputFormat": "输出一行 JSON 数组 [first, last]，表示从 0 开始的首末下标；不存在时输出 [-1, -1]。",
+    "starter": "import json\nimport sys\n\n\ndef solve():\n    n, target = map(int, sys.stdin.readline().split())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    answer = [-1, -1]  # 占位值，请用你的算法计算答案\n    # 在这里编写算法，将结果保存到 answer\n\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "样例 1 · 连续多次出现",
+        "stdin": "5 2\n1 2 2 2 5\n",
+        "expected": "[1, 3]"
+      },
+      {
+        "name": "边界 1 · 空数组",
+        "stdin": "0 8\n\n",
+        "expected": "[-1, -1]"
+      },
+      {
+        "name": "边界 2 · 唯一元素命中",
+        "stdin": "1 4\n4\n",
+        "expected": "[0, 0]"
+      },
+      {
+        "name": "样例 2 · 目标不存在",
+        "stdin": "3 2\n1 3 5\n",
+        "expected": "[-1, -1]"
+      },
+      {
+        "name": "边界 3 · 整个数组都是目标",
+        "stdin": "3 7\n7 7 7\n",
+        "expected": "[0, 2]"
+      }
+    ]
+  },
+  {
+    "id": "162",
+    "title": "寻找峰值",
+    "topic": "二分查找",
+    "episode": 5,
+    "episodes": [
+      5
+    ],
+    "url": "https://leetcode.cn/problems/find-peak-element/",
+    "statement": "给定非空整数数组 nums，保证任意相邻两个元素不相等。峰值是严格大于左右相邻元素的元素，数组外两侧的值都视为负无穷。输出任意一个峰值的下标，下标从 0 开始，不要求是全局最大值的位置。算法要求时间复杂度 O(log n)。",
+    "inputFormat": "第一行：整数 n，n ≥ 1。\n第二行：n 个整数 nums，任意相邻元素不相等。",
+    "outputFormat": "输出一个从 0 开始的合法峰值下标。可能有多个正确答案；本地判题会验证下标对应位置是否为峰值，样例预期仅展示其中一个。",
+    "starter": "import sys\n\n\ndef solve():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    answer = -1  # 占位值，请用你的算法计算答案\n    # 在这里编写算法，将结果保存到 answer\n\n    print(answer)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "judge": "peak",
+    "cases": [
+      {
+        "name": "样例 1 · 两个峰值任选其一",
+        "stdin": "5\n1 4 2 5 3\n",
+        "expected": "1"
+      },
+      {
+        "name": "边界 1 · 单个元素也是峰值",
+        "stdin": "1\n9\n",
+        "expected": "0"
+      },
+      {
+        "name": "边界 2 · 递增数组的右端点",
+        "stdin": "3\n1 3 7\n",
+        "expected": "2"
+      },
+      {
+        "name": "边界 3 · 递减数组的左端点",
+        "stdin": "3\n7 3 1\n",
+        "expected": "0"
+      },
+      {
+        "name": "样例 2 · 负数也有峰值",
+        "stdin": "3\n-3 -1 -4\n",
+        "expected": "1"
+      },
+      {
+        "name": "样例 3 · 非相邻值可以相同",
+        "stdin": "3\n2 1 2\n",
+        "expected": "0"
+      }
+    ]
+  },
+  {
+    "id": "153",
+    "title": "寻找旋转排序数组中的最小值",
+    "topic": "二分查找",
+    "episode": 5,
+    "episodes": [
+      5
+    ],
+    "url": "https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/",
+    "statement": "一个元素互不相同的升序数组经过循环旋转后得到 nums，也可能旋转一整圈而保持原序。循环旋转会把一段前缀搬到末尾，同时保持各段内部顺序。求 nums 中的最小元素值。数组非空，算法要求时间复杂度 O(log n)。",
+    "inputFormat": "第一行：整数 n，n ≥ 1。\n第二行：n 个互不相同的整数 nums，保证是严格递增数组循环旋转后的结果。",
+    "outputFormat": "输出一个整数，表示最小元素的值，而不是下标。",
+    "starter": "import sys\n\n\ndef solve():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    answer = 0  # 占位值，请用你的算法计算答案\n    # 在这里编写算法，将结果保存到 answer\n\n    print(answer)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "样例 1 · 最小值位于内部",
+        "stdin": "5\n4 6 -3 -1 2\n",
+        "expected": "-3"
+      },
+      {
+        "name": "边界 1 · 旋转一整圈",
+        "stdin": "4\n-2 0 3 7\n",
+        "expected": "-2"
+      },
+      {
+        "name": "边界 2 · 单个元素",
+        "stdin": "1\n8\n",
+        "expected": "8"
+      },
+      {
+        "name": "边界 3 · 两个元素逆序",
+        "stdin": "2\n5 1\n",
+        "expected": "1"
+      },
+      {
+        "name": "样例 2 · 最小值位于末尾",
+        "stdin": "4\n2 4 7 1\n",
+        "expected": "1"
+      }
+    ]
+  },
+  {
+    "id": "33",
+    "title": "搜索旋转排序数组",
+    "topic": "二分查找",
+    "episode": 5,
+    "episodes": [
+      5
+    ],
+    "url": "https://leetcode.cn/problems/search-in-rotated-sorted-array/",
+    "statement": "给定一个由严格递增数组循环旋转得到的非空数组 nums，以及目标值 target。数组元素互不相同，也可能保持未旋转的顺序。若 target 存在，输出它在当前数组中从 0 开始的下标；否则输出 -1。算法要求时间复杂度 O(log n)。",
+    "inputFormat": "第一行：两个整数 n target，n ≥ 1。\n第二行：n 个互不相同的整数 nums，保证是严格递增数组循环旋转后的结果。",
+    "outputFormat": "输出一个整数，表示目标值在输入数组中从 0 开始的下标；不存在时输出 -1。",
+    "starter": "import sys\n\n\ndef solve():\n    n, target = map(int, sys.stdin.readline().split())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    answer = -1  # 占位值，请用你的算法计算答案\n    # 在这里编写算法，将结果保存到 answer\n\n    print(answer)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "judge": "tokens",
+    "cases": [
+      {
+        "name": "样例 1 · 目标在旋转后的后半段",
+        "stdin": "5 -1\n4 6 -3 -1 2\n",
+        "expected": "3"
+      },
+      {
+        "name": "样例 2 · 目标不存在",
+        "stdin": "5 5\n4 6 -3 -1 2\n",
+        "expected": "-1"
+      },
+      {
+        "name": "边界 1 · 单个元素命中",
+        "stdin": "1 9\n9\n",
+        "expected": "0"
+      },
+      {
+        "name": "边界 2 · 未旋转数组",
+        "stdin": "4 7\n-2 0 3 7\n",
+        "expected": "3"
+      },
+      {
+        "name": "样例 3 · 目标是第一个元素",
+        "stdin": "4 5\n5 8 1 3\n",
+        "expected": "0"
+      }
+    ]
+  },
+  {
+    "id": "739",
+    "title": "每日温度",
+    "topic": "单调栈",
+    "episode": 26,
+    "episodes": [
+      26
+    ],
+    "url": "https://leetcode.cn/problems/daily-temperatures/",
+    "statement": "数组 temperatures 依次记录每天的温度。对每一天，求从当天起还要等待多少天，才会第一次遇到严格更高的温度；相同温度不算更高。若以后没有更高温度，该天的答案为 0。",
+    "inputFormat": "第一行：整数 n，n ≥ 1。\n第二行：n 个整数 temperatures，表示按日期先后排列的温度，每个值在 30 到 100 之间。",
+    "outputFormat": "输出一行长度为 n 的 JSON 数组，依次给出每天需要等待的天数。",
+    "starter": "import json\nimport sys\n\n\ndef solve():\n    n = int(sys.stdin.readline())\n    temperatures = list(map(int, sys.stdin.readline().split()))\n\n    answer = []  # 占位值，请用你的算法计算答案\n    # 在这里编写算法，将结果保存到 answer\n\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "样例 1 · 跳过相同温度",
+        "stdin": "4\n60 60 61 59\n",
+        "expected": "[2, 1, 0, 0]"
+      },
+      {
+        "name": "边界 1 · 持续降温",
+        "stdin": "3\n80 70 60\n",
+        "expected": "[0, 0, 0]"
+      },
+      {
+        "name": "边界 2 · 只有一天",
+        "stdin": "1\n30\n",
+        "expected": "[0]"
+      },
+      {
+        "name": "样例 2 · 等待多天后升温",
+        "stdin": "5\n50 40 45 55 50\n",
+        "expected": "[3, 1, 1, 0, 0]"
+      }
+    ]
+  },
+  {
+    "id": "239",
+    "title": "滑动窗口最大值",
+    "topic": "单调队列",
+    "episode": 27,
+    "episodes": [
+      27
+    ],
+    "url": "https://leetcode.cn/problems/sliding-window-maximum/",
+    "statement": "给定整数数组 nums 和窗口长度 k。窗口从最左侧的 k 个元素开始，每次向右移动一个位置，直到到达数组最右侧。按照窗口出现的先后顺序，输出每个窗口内的最大元素值。",
+    "inputFormat": "第一行：两个整数 n k，1 ≤ k ≤ n。\n第二行：n 个整数 nums，可以为负数。",
+    "outputFormat": "输出一行长度为 n - k + 1 的 JSON 数组，依次列出每个窗口的最大值。",
+    "starter": "import json\nimport sys\n\n\ndef solve():\n    n, k = map(int, sys.stdin.readline().split())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    answer = []  # 占位值，请用你的算法计算答案\n    # 在这里编写算法，将结果保存到 answer\n\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "judge": "json",
+    "cases": [
+      {
+        "name": "样例 1 · 最大值移出窗口",
+        "stdin": "5 3\n4 1 3 2 5\n",
+        "expected": "[4, 3, 5]"
+      },
+      {
+        "name": "边界 1 · 窗口长度为 1",
+        "stdin": "3 1\n-2 7 0\n",
+        "expected": "[-2, 7, 0]"
+      },
+      {
+        "name": "边界 2 · 窗口覆盖整个数组",
+        "stdin": "3 3\n-4 -2 -7\n",
+        "expected": "[-2]"
+      },
+      {
+        "name": "样例 2 · 重复最大值",
+        "stdin": "4 2\n2 2 1 2\n",
+        "expected": "[2, 2, 2]"
+      },
+      {
+        "name": "边界 3 · 只有一个元素",
+        "stdin": "1 1\n8\n",
+        "expected": "[8]"
+      }
+    ]
+  }
+]

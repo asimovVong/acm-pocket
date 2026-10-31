@@ -1,0 +1,238 @@
+[
+  {
+    "id": "167",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/solutions/1968341/san-shu-zhi-he-bu-hui-xie-xiang-xiang-sh-6wbq/",
+    "sourceTitle": "【视频】双指针想不明白？一个视频讲透！（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "相向双指针",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      },
+      {
+        "code": "import json",
+        "purpose": "把答案列表输出为 JSON 数组"
+      }
+    ],
+    "code": "import sys\nimport json\n\n\ndef solve():\n    n, target = map(int, sys.stdin.readline().split())\n    numbers = list(map(int, sys.stdin.readline().split()))\n\n    left, right = 0, n - 1\n    while left < right:\n        total = numbers[left] + numbers[right]\n        if total == target:\n            print(json.dumps([left + 1, right + 1]))\n            return\n        if total > target:\n            right -= 1\n        else:\n            left += 1\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "note": "按作者题解思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "15",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/3sum/solutions/1968332/shuang-zhi-zhen-xiang-bu-ming-bai-yi-ge-pno55/",
+    "sourceTitle": "【视频】极致优化！一个视频讲透双指针！（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "排序 + 相向双指针 + 去重与两处剪枝",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      },
+      {
+        "code": "import json",
+        "purpose": "把答案列表输出为 JSON 数组"
+      }
+    ],
+    "code": "import sys\nimport json\n\n\ndef solve():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n    nums.sort()\n\n    answer = []\n    for i in range(n - 2):\n        first = nums[i]\n        if i > 0 and first == nums[i - 1]:\n            continue\n        # 最小的三个数仍然大于 0，后续枚举也没有答案。\n        if first + nums[i + 1] + nums[i + 2] > 0:\n            break\n        # 当前 first 加上最大的两个数仍然小于 0。\n        if first + nums[-2] + nums[-1] < 0:\n            continue\n\n        left, right = i + 1, n - 1\n        while left < right:\n            total = first + nums[left] + nums[right]\n            if total < 0:\n                left += 1\n            elif total > 0:\n                right -= 1\n            else:\n                answer.append([first, nums[left], nums[right]])\n                left += 1\n                while left < right and nums[left] == nums[left - 1]:\n                    left += 1\n                right -= 1\n                while left < right and nums[right] == nums[right + 1]:\n                    right -= 1\n\n    print(json.dumps(answer))\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "note": "按作者题解思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "11",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/container-with-most-water/solutions/1974355/by-endlesscheng-f0xz/",
+    "sourceTitle": "【视频讲解】双指针做法（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "相向双指针：移动较短的一边",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import sys\n\n\ndef solve():\n    n = int(sys.stdin.readline())\n    height = list(map(int, sys.stdin.readline().split()))\n\n    answer = 0\n    left, right = 0, n - 1\n    while left < right:\n        answer = max(answer, (right - left) * min(height[left], height[right]))\n        if height[left] < height[right]:\n            left += 1\n        else:\n            right -= 1\n\n    print(answer)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "note": "按作者题解思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "42",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/trapping-rain-water/solutions/1974340/zuo-liao-nbian-huan-bu-hui-yi-ge-shi-pin-ukwm/",
+    "sourceTitle": "【视频】三种方法：前后缀分解/双指针/单调栈（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "双指针：维护左右最高柱子",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import sys\n\n\ndef solve():\n    n = int(sys.stdin.readline())\n    height = list(map(int, sys.stdin.readline().split()))\n\n    answer = 0\n    left_max = right_max = 0\n    left, right = 0, n - 1\n    while left < right:\n        left_max = max(left_max, height[left])\n        right_max = max(right_max, height[right])\n        # 最高柱子较矮的一侧，当前位置的水面高度已经确定。\n        if left_max < right_max:\n            answer += left_max - height[left]\n            left += 1\n        else:\n            answer += right_max - height[right]\n            right -= 1\n\n    print(answer)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "note": "按作者题解思路改编，输入输出适配本页约定。选择原文的双指针版本；原文另有前后缀分解、单调栈版本。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "209",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/minimum-size-subarray-sum/solutions/1959532/biao-ti-xia-biao-zong-suan-cuo-qing-kan-k81nh/",
+    "sourceTitle": "【视频】两种写法：循环外更新/循环内更新，附题单（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "滑动窗口：循环内更新最短长度",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import sys\n\n\ndef solve():\n    n, target = map(int, sys.stdin.readline().split())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    answer = n + 1\n    left = 0\n    total = 0\n    for right, value in enumerate(nums):\n        total += value\n        while total >= target:\n            answer = min(answer, right - left + 1)\n            total -= nums[left]\n            left += 1\n\n    print(answer if answer <= n else 0)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "note": "按作者题解思路改编，输入输出适配本页约定。选择原文“循环内更新”版本，用 n + 1 表示尚无答案，无须导入 inf。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "3",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/longest-substring-without-repeating-characters/solutions/1959540/xia-biao-zong-suan-cuo-qing-kan-zhe-by-e-iaks/",
+    "sourceTitle": "【视频】一个视频讲透滑动窗口！附题单！（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "滑动窗口 + Counter 字符计数",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      },
+      {
+        "code": "from collections import Counter",
+        "purpose": "统计当前窗口内各字符出现次数"
+      }
+    ],
+    "code": "import sys\nfrom collections import Counter\n\n\ndef solve():\n    s = sys.stdin.readline().rstrip('\\r\\n')\n\n    answer = 0\n    left = 0\n    count = Counter()\n    for right, char in enumerate(s):\n        count[char] += 1\n        # 右端新增字符重复时，逐个移走左端字符。\n        while count[char] > 1:\n            count[s[left]] -= 1\n            left += 1\n        answer = max(answer, right - left + 1)\n\n    print(answer)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "note": "按作者题解思路改编，输入输出适配本页约定。使用你指定的 Counter 计数写法；核验时原文计数版本使用 defaultdict(int)，此处作等价适配。仅删除行末换行，保留字符串两端空格。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "713",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/subarray-product-less-than-k/solutions/1959538/xia-biao-zong-suan-cuo-qing-kan-zhe-by-e-jebq/",
+    "sourceTitle": "【视频讲解】越短越合法型滑动窗口（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "滑动窗口：枚举右端点统计合法左端点",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import sys\n\n\ndef solve():\n    n, k = map(int, sys.stdin.readline().split())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    if k <= 1:\n        print(0)\n        return\n\n    answer = 0\n    left = 0\n    product = 1\n    for right, value in enumerate(nums):\n        product *= value\n        while product >= k:\n            product //= nums[left]\n            left += 1\n        # 固定右端点后，从 left 到 right 都能作为起点。\n        answer += right - left + 1\n\n    print(answer)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "note": "按作者题解思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "34",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/solutions/1980196/er-fen-cha-zhao-zong-shi-xie-bu-dui-yi-g-t9l9/",
+    "sourceTitle": "【视频讲解】二分查找总是写不对？三种写法，一个视频讲透！（Python/Java/C++/C/Go/JS）",
+    "variant": "两次 lower_bound：闭区间二分",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      },
+      {
+        "code": "import json",
+        "purpose": "把答案列表输出为 JSON 数组"
+      }
+    ],
+    "code": "import sys\nimport json\n\n\ndef lower_bound(nums, target):\n    # 找到第一个大于等于 target 的下标；找不到则返回 len(nums)。\n    left, right = 0, len(nums) - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if nums[mid] >= target:\n            right = mid - 1\n        else:\n            left = mid + 1\n    return left\n\n\ndef solve():\n    n, target = map(int, sys.stdin.readline().split())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    first = lower_bound(nums, target)\n    if first == n or nums[first] != target:\n        answer = [-1, -1]\n    else:\n        last = lower_bound(nums, target + 1) - 1\n        answer = [first, last]\n\n    print(json.dumps(answer))\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "note": "按作者题解思路改编，输入输出适配本页约定。选择原文的手写闭区间二分；原文还给出 bisect_left / bisect_right 库函数版本，使用时需 from bisect import bisect_left, bisect_right。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "162",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/find-peak-element/solutions/1987497/by-endlesscheng-9ass/",
+    "sourceTitle": "严格证明，简洁写法（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "比较相邻高度的开区间二分",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import sys\n\n\ndef solve():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    left, right = -1, n - 1\n    while left + 1 < right:\n        mid = (left + right) // 2\n        if nums[mid] > nums[mid + 1]:\n            right = mid\n        else:\n            left = mid\n\n    print(right)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "note": "按作者题解思路改编，输入输出适配本页约定。输出任意合法峰值下标即可，与样例展示的下标不同也可能正确。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "153",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/solutions/1987499/by-endlesscheng-owgd/",
+    "sourceTitle": "和最后一个数比大小，简洁二分（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "与末尾元素比较的开区间二分",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import sys\n\n\ndef solve():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    left, right = -1, n - 1\n    while left + 1 < right:\n        mid = (left + right) // 2\n        if nums[mid] < nums[-1]:\n            right = mid\n        else:\n            left = mid\n\n    print(nums[right])\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "note": "按作者题解思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "33",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/search-in-rotated-sorted-array/solutions/1987503/by-endlesscheng-auuh/",
+    "sourceTitle": "两种方法：两次二分 / 一次二分（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "两次二分：先找最小值，再搜索有序段",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import sys\n\n\ndef find_min_index(nums):\n    left, right = -1, len(nums) - 1\n    while left + 1 < right:\n        mid = (left + right) // 2\n        if nums[mid] < nums[-1]:\n            right = mid\n        else:\n            left = mid\n    return right\n\n\ndef lower_bound(nums, left, right, target):\n    # 在指定的开区间中二分，循环结束后验证候选下标。\n    while left + 1 < right:\n        mid = (left + right) // 2\n        if nums[mid] >= target:\n            right = mid\n        else:\n            left = mid\n    return right if nums[right] == target else -1\n\n\ndef solve():\n    n, target = map(int, sys.stdin.readline().split())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    split = find_min_index(nums)\n    if target > nums[-1]:\n        answer = lower_bound(nums, -1, split, target)\n    else:\n        # target 不大于末尾元素，所以候选下标不会越过数组末端。\n        answer = lower_bound(nums, split - 1, n, target)\n\n    print(answer)\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "note": "按作者题解思路改编，输入输出适配本页约定。选择原文的“两次二分”版本；两次 O(log n) 的搜索相加仍为 O(log n)。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "739",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/daily-temperatures/solutions/2470179/shi-pin-jiang-qing-chu-wei-shi-yao-yao-y-k0ks/",
+    "sourceTitle": "【视频】讲清楚为什么要用单调栈！两种写法：从右到左 / 从左到右",
+    "variant": "从左到右的单调栈",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      },
+      {
+        "code": "import json",
+        "purpose": "把答案列表输出为 JSON 数组"
+      }
+    ],
+    "code": "import sys\nimport json\n\n\ndef solve():\n    n = int(sys.stdin.readline())\n    temperatures = list(map(int, sys.stdin.readline().split()))\n\n    answer = [0] * n\n    stack = []\n    for day, temperature in enumerate(temperatures):\n        # 栈里保存尚未等到更高温度的日期下标。\n        while stack and temperature > temperatures[stack[-1]]:\n            previous_day = stack.pop()\n            answer[previous_day] = day - previous_day\n        stack.append(day)\n\n    print(json.dumps(answer))\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "note": "按作者题解思路改编，输入输出适配本页约定。选择原文从左到右的版本，相同温度不会使栈顶出栈。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "239",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/sliding-window-maximum/solutions/2499715/shi-pin-yi-ge-shi-pin-miao-dong-dan-diao-ezj6/",
+    "sourceTitle": "降本增笑，秒懂单调队列！附题单！（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "单调队列：保存候选最大值的下标",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      },
+      {
+        "code": "import json",
+        "purpose": "把答案列表输出为 JSON 数组"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "从队首和队尾维护窗口内候选最大值下标"
+      }
+    ],
+    "code": "import sys\nimport json\nfrom collections import deque\n\n\ndef solve():\n    n, k = map(int, sys.stdin.readline().split())\n    nums = list(map(int, sys.stdin.readline().split()))\n\n    answer = [0] * (n - k + 1)\n    queue = deque()\n    for right, value in enumerate(nums):\n        while queue and nums[queue[-1]] <= value:\n            queue.pop()\n        queue.append(right)\n\n        left = right - k + 1\n        if queue[0] < left:\n            queue.popleft()\n        if left >= 0:\n            answer[left] = nums[queue[0]]\n\n    print(json.dumps(answer))\n\n\nif __name__ == '__main__':\n    solve()\n",
+    "note": "按作者题解思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  }
+]

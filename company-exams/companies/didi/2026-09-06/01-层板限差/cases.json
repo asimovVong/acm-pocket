@@ -1,0 +1,50 @@
+[
+  {
+    "name": "原文样例 1",
+    "stdin": "3 1\n1 2 3\n",
+    "expected": "4",
+    "source": "article"
+  },
+  {
+    "name": "原文样例 2",
+    "stdin": "2 1\n8 1\n",
+    "expected": "1",
+    "source": "article"
+  },
+  {
+    "name": "原文样例 3",
+    "stdin": "3 10\n4 4 4\n",
+    "expected": "6",
+    "source": "article"
+  },
+  {
+    "name": "升高不限幅度",
+    "stdin": "2 1\n1 1000000\n",
+    "expected": "1",
+    "source": "local"
+  },
+  {
+    "name": "恰好相差 d",
+    "stdin": "2 2\n3 1\n",
+    "expected": "2",
+    "source": "local"
+  },
+  {
+    "name": "两个同高箱子",
+    "stdin": "2 1\n7 7\n",
+    "expected": "2",
+    "source": "local"
+  },
+  {
+    "name": "所有排列都合法",
+    "stdin": "4 10\n1 2 3 4\n",
+    "expected": "24",
+    "source": "local"
+  },
+  {
+    "name": "高度分行读入",
+    "stdin": "3 1\n1\n2 3\n",
+    "expected": "4",
+    "source": "local"
+  }
+]

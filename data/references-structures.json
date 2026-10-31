@@ -1,0 +1,590 @@
+[
+  {
+    "id": "206",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/reverse-linked-list/solutions/1992225/you-xie-cuo-liao-yi-ge-shi-pin-jiang-tou-o5zy/",
+    "sourceTitle": "两种方法：递归 / 迭代，本质是尾插法和头插法（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "方法二：迭代反转（头插法）",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head):\n    previous = None\n    current = head\n    while current is not None:\n        following = current.next\n        current.next = previous\n        previous = current\n        current = following\n    return previous\n\ndef main():\n    n = int(sys.stdin.readline())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的方法二：迭代反转（头插法）思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "92",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/reverse-linked-list-ii/solutions/1992226/you-xie-cuo-liao-yi-ge-shi-pin-jiang-tou-teqq/",
+    "sourceTitle": "【视频讲解】反转链表 O(1) 空间写法（Python/Java/C++/C/Go/JS）",
+    "variant": "哨兵节点 + 区间反转",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head, left, right):\n    dummy = ListNode(next=head)\n    before = dummy\n    for _ in range(left - 1):\n        before = before.next\n\n    # 保存区间原来的头，它会成为反转后的尾。\n    segment_tail = before.next\n    previous = None\n    current = segment_tail\n    for _ in range(right - left + 1):\n        following = current.next\n        current.next = previous\n        previous = current\n        current = following\n\n    segment_tail.next = current\n    before.next = previous\n    return dummy.next\n\ndef main():\n    n, left, right = map(int, sys.stdin.readline().split())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head, left, right)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的哨兵节点 + 区间反转思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "25",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/reverse-nodes-in-k-group/solutions/1992228/you-xie-cuo-liao-yi-ge-shi-pin-jiang-tou-plfs/",
+    "sourceTitle": "【视频讲解】从反转链表到 K 个一组反转（Python/Java/C++/C/Go/JS）",
+    "variant": "先统计长度，再逐组反转 k 个节点",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head, k):\n    remaining = 0\n    current = head\n    while current is not None:\n        remaining += 1\n        current = current.next\n\n    dummy = ListNode(next=head)\n    before = dummy\n    while remaining >= k:\n        group_tail = before.next\n        current = group_tail\n        previous = None\n        for _ in range(k):\n            following = current.next\n            current.next = previous\n            previous = current\n            current = following\n        # 把已反转的一组接回前后两段链表。\n        before.next = previous\n        group_tail.next = current\n        before = group_tail\n        remaining -= k\n    return dummy.next\n\ndef main():\n    n, k = map(int, sys.stdin.readline().split())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head, k)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的先统计长度，再逐组反转 k 个节点思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "876",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/middle-of-the-linked-list/solutions/1999265/mei-xiang-ming-bai-yi-ge-shi-pin-jiang-t-wzwm/",
+    "sourceTitle": "龟兔赛跑（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "快慢指针：快指针每次前进两步",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head):\n    slow = fast = head\n    while fast is not None and fast.next is not None:\n        slow = slow.next\n        fast = fast.next.next\n    return slow\n\ndef main():\n    n = int(sys.stdin.readline())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的快慢指针：快指针每次前进两步思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "141",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/linked-list-cycle/solutions/1999269/mei-xiang-ming-bai-yi-ge-shi-pin-jiang-t-c4sw/",
+    "sourceTitle": "没想明白？一个视频讲透快慢指针！（Python/Java/C++/C/Go/JS）",
+    "variant": "Floyd 快慢指针判环",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef solve(head):\n    slow = fast = head\n    while fast is not None and fast.next is not None:\n        slow = slow.next\n        fast = fast.next.next\n        if slow is fast:\n            return True\n    return False\n\ndef main():\n    n, pos = map(int, sys.stdin.readline().split())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    if pos != -1:\n        if not 0 <= pos < n:\n            raise ValueError(\"pos 超出范围\")\n        nodes[-1].next = nodes[pos]\n    answer = solve(head)\n    print(1 if answer else 0)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的Floyd 快慢指针判环思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "142",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/linked-list-cycle-ii/solutions/1999271/mei-xiang-ming-bai-yi-ge-shi-pin-jiang-t-nvsq/",
+    "sourceTitle": "【图解】一张图秒懂环形链表 II，Floyd 判圈算法（Python/Java/C++/C/Go/JS）",
+    "variant": "Floyd 判环后，从头节点与相遇点同步寻找入口",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef solve(head):\n    slow = fast = head\n    while fast is not None and fast.next is not None:\n        slow = slow.next\n        fast = fast.next.next\n        if slow is fast:\n            entry = head\n            while entry is not slow:\n                entry = entry.next\n                slow = slow.next\n            return entry\n    return None\n\ndef main():\n    n, pos = map(int, sys.stdin.readline().split())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    if pos != -1:\n        if not 0 <= pos < n:\n            raise ValueError(\"pos 超出范围\")\n        nodes[-1].next = nodes[pos]\n    answer = solve(head)\n    print(-1 if answer is None else nodes.index(answer))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的Floyd 判环后，从头节点与相遇点同步寻找入口思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "143",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/reorder-list/solutions/1999276/mei-xiang-ming-bai-yi-ge-shi-pin-jiang-t-u66q/",
+    "sourceTitle": "【视频】没想明白？一个视频讲透！（Python/Java/C++/C/Go/JS）",
+    "variant": "寻找中点 + 反转后半段 + 交替连接",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head):\n    slow = fast = head\n    while fast is not None and fast.next is not None:\n        slow = slow.next\n        fast = fast.next.next\n\n    # 从中点开始反转，原来的末尾成为第二段的头。\n    second = None\n    current = slow\n    while current is not None:\n        following = current.next\n        current.next = second\n        second = current\n        current = following\n\n    first = head\n    while second.next is not None:\n        first_next = first.next\n        second_next = second.next\n        first.next = second\n        second.next = first_next\n        first = first_next\n        second = second_next\n\ndef main():\n    n = int(sys.stdin.readline())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    solve(head)\n    print(json.dumps(list_values(head), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的寻找中点 + 反转后半段 + 交替连接思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "237",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/delete-node-in-a-linked-list/solutions/2004056/ru-he-shan-chu-jie-dian-liu-fen-zhong-ga-x3kn/",
+    "sourceTitle": "脑筋急转弯+简洁写法（Python/Java/C++/C/Go/JS）",
+    "variant": "复制后继节点的值，再跳过后继节点",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(node):\n    # 只能操作 node；题目保证它后面还有一个节点。\n    successor = node.next\n    node.val = successor.val\n    node.next = successor.next\n\ndef main():\n    n, index = map(int, sys.stdin.readline().split())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    solve(nodes[index])\n    print(json.dumps(list_values(head), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的复制后继节点的值，再跳过后继节点思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "19",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/remove-nth-node-from-end-of-list/solutions/2004057/ru-he-shan-chu-jie-dian-liu-fen-zhong-ga-xpfs/",
+    "sourceTitle": "【视频讲解】前后指针，简洁写法（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "哨兵节点 + 间距为 k 的前后指针",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head, k):\n    dummy = ListNode(next=head)\n    left = right = dummy\n    for _ in range(k):\n        right = right.next\n    while right.next is not None:\n        left = left.next\n        right = right.next\n    left.next = left.next.next\n    return dummy.next\n\ndef main():\n    n, k = map(int, sys.stdin.readline().split())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head, k)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的哨兵节点 + 间距为 k 的前后指针思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "83",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/remove-duplicates-from-sorted-list/solutions/2004062/ru-he-qu-zhong-yi-ge-shi-pin-jiang-tou-p-98g7/",
+    "sourceTitle": "【视频】如何去重？一个视频讲透！附题单！（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "遍历链表，跳过相同值的后继节点",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head):\n    current = head\n    while current is not None and current.next is not None:\n        if current.val == current.next.val:\n            current.next = current.next.next\n        else:\n            current = current.next\n    return head\n\ndef main():\n    n = int(sys.stdin.readline())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的遍历链表，跳过相同值的后继节点思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "82",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/remove-duplicates-from-sorted-list-ii/solutions/2004067/ru-he-qu-zhong-yi-ge-shi-pin-jiang-tou-p-2ddn/",
+    "sourceTitle": "【视频】如何去重？一个视频讲透！附题单！（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "哨兵节点 + 整段删除重复值",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import json\nimport sys\n\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef build_list(values):\n    nodes = [ListNode(value) for value in values]\n    for a, b in zip(nodes, nodes[1:]):\n        a.next = b\n    return (nodes[0] if nodes else None), nodes\n\n\ndef list_values(head):\n    values, seen = [], set()\n    while head is not None:\n        if id(head) in seen:\n            raise ValueError(\"输出链表出现了环，请检查 next 指针\")\n        seen.add(id(head))\n        values.append(head.val)\n        head = head.next\n    return values\n\n\ndef solve(head):\n    dummy = ListNode(next=head)\n    before = dummy\n    while before.next is not None and before.next.next is not None:\n        repeated_value = before.next.val\n        if before.next.next.val != repeated_value:\n            before = before.next\n            continue\n        # before 保持不动，直到重复的这一段全部被跳过。\n        while before.next is not None and before.next.val == repeated_value:\n            before.next = before.next.next\n    return dummy.next\n\ndef main():\n    n = int(sys.stdin.readline())\n    values = list(map(int, sys.stdin.readline().split()))\n    if len(values) != n:\n        raise ValueError(\"节点数与 n 不一致\")\n    head, nodes = build_list(values)\n    answer = solve(head)\n    print(json.dumps(list_values(answer), ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的哨兵节点 + 整段删除重复值思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "104",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/maximum-depth-of-binary-tree/solutions/2010612/kan-wan-zhe-ge-shi-pin-rang-ni-dui-di-gu-44uz/",
+    "sourceTitle": "【视频讲解】让你对递归的理解更上一层楼！（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "方法一：自底向上递归计算子树深度",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入，设置递归深度上限"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n# 链状树的深度可能超过 Python 默认的递归层数。\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    if root is None:\n        return 0\n    left_depth = solve(root.left)\n    right_depth = solve(root.right)\n    return max(left_depth, right_depth) + 1\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的方法一：自底向上递归计算子树深度思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "100",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/same-tree/solutions/2015056/ru-he-ling-huo-yun-yong-di-gui-lai-kan-s-empk/",
+    "sourceTitle": "【视频】如何灵活运用递归？（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "递归比较对应节点及左右子树",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入，设置递归深度上限"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n# 链状树的深度可能超过 Python 默认的递归层数。\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(p, q):\n    if p is None or q is None:\n        return p is q\n    if p.val != q.val:\n        return False\n    return solve(p.left, q.left) and solve(p.right, q.right)\n\ndef main():\n    p = build_tree(json.loads(sys.stdin.readline()))\n    q = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(p, q)\n    print(1 if answer else 0)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的递归比较对应节点及左右子树思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "101",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/symmetric-tree/solutions/2015063/ru-he-ling-huo-yun-yong-di-gui-lai-kan-s-6dq5/",
+    "sourceTitle": "【视频】如何灵活运用递归？附思考题（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "镜像递归：交叉比较两侧孩子",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入，设置递归深度上限"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n# 链状树的深度可能超过 Python 默认的递归层数。\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    def mirrored(left, right):\n        if left is None or right is None:\n            return left is right\n        if left.val != right.val:\n            return False\n        return mirrored(left.left, right.right) and mirrored(left.right, right.left)\n\n    return root is None or mirrored(root.left, root.right)\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(1 if answer else 0)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的镜像递归：交叉比较两侧孩子思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "110",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/balanced-binary-tree/solutions/2015068/ru-he-ling-huo-yun-yong-di-gui-lai-kan-s-c3wj/",
+    "sourceTitle": "【视频】如何灵活运用递归？（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "后序递归计算高度，以 -1 标记不平衡并提前返回",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入，设置递归深度上限"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n# 链状树的深度可能超过 Python 默认的递归层数。\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    def height(node):\n        if node is None:\n            return 0\n        left_height = height(node.left)\n        if left_height == -1:\n            return -1\n        right_height = height(node.right)\n        if right_height == -1 or abs(left_height - right_height) > 1:\n            return -1\n        return max(left_height, right_height) + 1\n\n    return height(root) != -1\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(1 if answer else 0)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的后序递归计算高度，以 -1 标记不平衡并提前返回思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "199",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/binary-tree-right-side-view/solutions/2015061/ru-he-ling-huo-yun-yong-di-gui-lai-kan-s-r1nc/",
+    "sourceTitle": "两种方法：BFS / DFS（Python/Java/C++/Go/JS/Rust）",
+    "variant": "方法二：优先遍历右子树，记录每层首次遇到的节点",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入，设置递归深度上限"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n# 链状树的深度可能超过 Python 默认的递归层数。\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    answer = []\n\n    def visit(node, depth):\n        if node is None:\n            return\n        if depth == len(answer):\n            answer.append(node.val)\n        visit(node.right, depth + 1)\n        visit(node.left, depth + 1)\n\n    visit(root, 0)\n    return answer\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的方法二：优先遍历右子树，记录每层首次遇到的节点思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "98",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/validate-binary-search-tree/solutions/2020306/qian-xu-zhong-xu-hou-xu-san-chong-fang-f-yxvh/",
+    "sourceTitle": "【视频】前序中序后序，三种方法，一个视频讲透！（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "方法一：前序遍历，向子树传递严格的取值范围",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入，设置递归深度上限"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n# 链状树的深度可能超过 Python 默认的递归层数。\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    def valid(node, lower, upper):\n        if node is None:\n            return True\n        value = node.val\n        if not lower < value < upper:\n            return False\n        return valid(node.left, lower, value) and valid(node.right, value, upper)\n\n    return valid(root, float('-inf'), float('inf'))\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(1 if answer else 0)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的方法一：前序遍历，向子树传递严格的取值范围思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "236",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/solutions/2023872/fen-lei-tao-lun-luan-ru-ma-yi-ge-shi-pin-2r95/",
+    "sourceTitle": "【视频讲解】简洁写法（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "后序递归，合并左右子树找到的目标节点",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入，设置递归深度上限"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n# 链状树的深度可能超过 Python 默认的递归层数。\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef find_node(root, value):\n    # 仅把输入的唯一节点值转换为实际节点对象，供 solve 接收 p/q。\n    stack = [root]\n    while stack:\n        node = stack.pop()\n        if node is None:\n            continue\n        if node.val == value:\n            return node\n        stack.extend((node.left, node.right))\n    raise ValueError(\"目标节点不存在\")\n\n\ndef solve(root, p, q):\n    if root is None or root is p or root is q:\n        return root\n    left_found = solve(root.left, p, q)\n    right_found = solve(root.right, p, q)\n    if left_found is not None and right_found is not None:\n        return root\n    return left_found if left_found is not None else right_found\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    p_value, q_value = map(int, sys.stdin.readline().split())\n    p = find_node(root, p_value)\n    q = find_node(root, q_value)\n    answer = solve(root, p, q)\n    print(answer.val)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的后序递归，合并左右子树找到的目标节点思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "235",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/solutions/2023873/zui-jin-gong-gong-zu-xian-yi-ge-shi-pin-8h2zc/",
+    "sourceTitle": "【视频】分类讨论乱如麻？一个视频讲透！（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "利用 BST 的大小关系确定搜索方向（尾递归改为循环）",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef find_node(root, value):\n    # 仅把输入的唯一节点值转换为实际节点对象，供 solve 接收 p/q。\n    stack = [root]\n    while stack:\n        node = stack.pop()\n        if node is None:\n            continue\n        if node.val == value:\n            return node\n        stack.extend((node.left, node.right))\n    raise ValueError(\"目标节点不存在\")\n\n\ndef solve(root, p, q):\n    current = root\n    while current is not None:\n        if p.val < current.val and q.val < current.val:\n            current = current.left\n        elif p.val > current.val and q.val > current.val:\n            current = current.right\n        else:\n            return current\n    return None\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    p_value, q_value = map(int, sys.stdin.readline().split())\n    p = find_node(root, p_value)\n    q = find_node(root, q_value)\n    answer = solve(root, p, q)\n    print(answer.val)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的利用 BST 的大小关系确定搜索方向（尾递归改为循环）思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "102",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/binary-tree-level-order-traversal/solutions/2049807/bfs-wei-shi-yao-yao-yong-dui-lie-yi-ge-s-xlpz/",
+    "sourceTitle": "BFS 为什么要用队列？一个视频讲透！（Python/Java/C++/Go/JS/Rust）",
+    "variant": "写法二：单队列按层遍历",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    if root is None:\n        return []\n    queue = deque([root])\n    answer = []\n    while queue:\n        values = []\n        # 只取出当前层已有的节点，新加入的孩子留给下一层。\n        for _ in range(len(queue)):\n            node = queue.popleft()\n            values.append(node.val)\n            if node.left is not None:\n                queue.append(node.left)\n            if node.right is not None:\n                queue.append(node.right)\n        answer.append(values)\n    return answer\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的写法二：单队列按层遍历思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "103",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/solutions/2049827/bfs-wei-shi-yao-yao-yong-dui-lie-yi-ge-s-xlv3/",
+    "sourceTitle": "【视频】BFS 为什么要用队列？一个视频讲透！（Python/Java/C++/Go）",
+    "variant": "写法二：单队列按层遍历，隔层反转输出",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    if root is None:\n        return []\n    queue = deque([root])\n    answer = []\n    while queue:\n        values = []\n        for _ in range(len(queue)):\n            node = queue.popleft()\n            values.append(node.val)\n            if node.left is not None:\n                queue.append(node.left)\n            if node.right is not None:\n                queue.append(node.right)\n        if len(answer) % 2 == 1:\n            values.reverse()\n        answer.append(values)\n    return answer\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的写法二：单队列按层遍历，隔层反转输出思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "513",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/find-bottom-left-tree-value/solutions/2049776/bfs-wei-shi-yao-yao-yong-dui-lie-yi-ge-s-f34y/",
+    "sourceTitle": "【视频讲解】简洁写法（Python/Java/C++/Go）",
+    "variant": "从右到左的 BFS，取最后出队的节点",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    queue = deque([root])\n    last_value = root.val\n    while queue:\n        node = queue.popleft()\n        last_value = node.val\n        if node.right is not None:\n            queue.append(node.right)\n        if node.left is not None:\n            queue.append(node.left)\n    return last_value\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的从右到左的 BFS，取最后出队的节点思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "543",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/diameter-of-binary-tree/solutions/2227017/shi-pin-che-di-zhang-wo-zhi-jing-dpcong-taqma/",
+    "sourceTitle": "【视频】彻底掌握直径 DP，从二叉树到一般树（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "直径 DP：每个节点合并左右两条最长链",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入，设置递归深度上限"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n# 链状树的深度可能超过 Python 默认的递归层数。\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    diameter = 0\n\n    def depth(node):\n        nonlocal diameter\n        if node is None:\n            return 0\n        left_depth = depth(node.left)\n        right_depth = depth(node.right)\n        # 两侧深度相加，恰好是经过当前节点的路径边数。\n        diameter = max(diameter, left_depth + right_depth)\n        return max(left_depth, right_depth) + 1\n\n    depth(root)\n    return diameter\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的直径 DP：每个节点合并左右两条最长链思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "124",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/binary-tree-maximum-path-sum/solutions/2227021/shi-pin-che-di-zhang-wo-zhi-jing-dpcong-n9s91/",
+    "sourceTitle": "【视频】彻底掌握直径 DP！从二叉树到一般树！（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "直径 DP：合并左右链和，向父节点只返回一条非负链",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入，设置递归深度上限"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n# 链状树的深度可能超过 Python 默认的递归层数。\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    best_sum = float('-inf')\n\n    def chain_sum(node):\n        nonlocal best_sum\n        if node is None:\n            return 0\n        left_sum = chain_sum(node.left)\n        right_sum = chain_sum(node.right)\n        best_sum = max(best_sum, left_sum + node.val + right_sum)\n        # 父节点可以舍弃负数链，但完整答案必须经过至少一个节点。\n        return max(0, node.val + max(left_sum, right_sum))\n\n    chain_sum(root)\n    return best_sum\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的直径 DP：合并左右链和，向父节点只返回一条非负链思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "2246",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/longest-path-with-different-adjacent-characters/solutions/1427611/by-endlesscheng-92fw/",
+    "sourceTitle": "经典题：树的直径（Python/Java/C++/Go）",
+    "variant": "树的直径 DP（显式逆序遍历替代递归）",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入"
+      }
+    ],
+    "code": "import sys\n\n\ndef solve(parent, s):\n    n = len(parent)\n    children = [[] for _ in range(n)]\n    for child in range(1, n):\n        children[parent[child]].append(child)\n\n    # 先让父节点排在孩子前面；逆序处理时所有孩子都已计算完成。\n    # 使用显式顺序，避免 100000 节点链形树产生过深的递归。\n    order = [0]\n    for node in order:\n        order.extend(children[node])\n\n    longest_chain = [0] * n  # 向下的最长合法链，长度按边数计。\n    best_edges = 0\n    for node in reversed(order):\n        best_child_chain = 0\n        for child in children[node]:\n            if s[child] == s[node]:\n                continue\n            candidate = longest_chain[child] + 1\n            best_edges = max(best_edges, best_child_chain + candidate)\n            best_child_chain = max(best_child_chain, candidate)\n        longest_chain[node] = best_child_chain\n    return best_edges + 1  # 本题要求节点数。\n\ndef main():\n    n = int(sys.stdin.readline())\n    parent = list(map(int, sys.stdin.readline().split()))\n    s = sys.stdin.readline().strip()\n    if len(parent) != n or len(s) != n:\n        raise ValueError(\"parent 与 s 的长度都应为 n\")\n    answer = solve(parent, s)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的树的直径 DP（显式逆序遍历替代递归）思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "337",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/house-robber-iii/solutions/2282018/shi-pin-ru-he-si-kao-shu-xing-dppythonja-a7t1/",
+    "sourceTitle": "【视频】如何思考树形 DP？附 DP 题单（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "树形 DP：分别计算选择与不选择当前节点的收益",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入，设置递归深度上限"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n# 链状树的深度可能超过 Python 默认的递归层数。\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    def gains(node):\n        if node is None:\n            return 0, 0\n        left_take, left_skip = gains(node.left)\n        right_take, right_skip = gains(node.right)\n        take = node.val + left_skip + right_skip\n        skip = max(left_take, left_skip) + max(right_take, right_skip)\n        return take, skip\n\n    return max(gains(root))\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的树形 DP：分别计算选择与不选择当前节点的收益思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "968",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/binary-tree-cameras/solutions/2452795/shi-pin-ru-he-si-kao-shu-xing-dpgai-chen-uqsf/",
+    "sourceTitle": "【视频】一个思路解决两种变形：一般树 / 点权树（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "三状态树形 DP：安装、由父节点覆盖、由孩子覆盖",
+    "imports": [
+      {
+        "code": "import json",
+        "purpose": "解析或输出本题约定的 JSON 数组"
+      },
+      {
+        "code": "import sys",
+        "purpose": "读取标准输入，设置递归深度上限"
+      },
+      {
+        "code": "from collections import deque",
+        "purpose": "用队列构建或遍历二叉树"
+      }
+    ],
+    "code": "import json\nimport sys\nfrom collections import deque\n\n# 链状树的深度可能超过 Python 默认的递归层数。\nsys.setrecursionlimit(1_000_000)\n\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree(values):\n    # 层序队列格式：依次为每个非空节点分配左、右孩子。\n    # null 不入队，末尾缺失的孩子视为 null；不是 2*i+1 下标格式。\n    if not values or values[0] is None:\n        return None\n    root = TreeNode(values[0])\n    queue = deque([root])\n    i = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in (\"left\", \"right\"):\n            if i >= len(values):\n                break\n            value = values[i]\n            i += 1\n            if value is not None:\n                child = TreeNode(value)\n                setattr(node, side, child)\n                queue.append(child)\n    return root\n\n\ndef solve(root):\n    impossible = float('inf')\n\n    def costs(node):\n        if node is None:\n            return impossible, 0, 0\n        left_install, left_parent, left_children = costs(node.left)\n        right_install, right_parent, right_children = costs(node.right)\n\n        install = 1 + min(left_install, left_parent) + min(right_install, right_parent)\n        parent_covers = min(left_install, left_children) + min(right_install, right_children)\n        # 当前节点不安装时，至少一个孩子需要安装摄像头。\n        children_cover = min(\n            left_install + right_children,\n            left_children + right_install,\n            left_install + right_install,\n        )\n        return install, parent_covers, children_cover\n\n    install, _, children_cover = costs(root)\n    # 根节点没有父亲，只能自己安装或由孩子覆盖。\n    return min(install, children_cover)\n\ndef main():\n    root = build_tree(json.loads(sys.stdin.readline()))\n    answer = solve(root)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解的三状态树形 DP：安装、由父节点覆盖、由孩子覆盖思路改编，输入输出适配本页约定。",
+    "verifiedAt": "2026-09-15"
+  }
+]

@@ -1,0 +1,378 @@
+[
+  {
+    "id": "17",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/letter-combinations-of-a-phone-number/solutions/2059416/hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-3orv/",
+    "sourceTitle": "【视频】回溯不会写？套路在此！（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "定长 path：逐个按键枚举字母",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "import json",
+        "purpose": "按题目要求输出 JSON 数组"
+      }
+    ],
+    "code": "import sys\nimport json\n\n\ndef solve(digits):\n    if not digits:\n        return []\n    keyboard = ('', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz')\n    path = [''] * len(digits)\n    answer = []\n\n    def visit(position):\n        if position == len(digits):\n            answer.append(''.join(path))\n            return\n        for letter in keyboard[int(digits[position])]:\n            path[position] = letter\n            visit(position + 1)\n\n    visit(0)\n    return answer\n\n\ndef main():\n    digits = sys.stdin.readline().rstrip(\"\\r\\n\")\n    answer = solve(digits)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“定长 path：逐个按键枚举字母”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "78",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/subsets/solutions/2059409/hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-8tkl/",
+    "sourceTitle": "【视频】三种写法：选或不选/枚举选哪个/二进制枚举（Python/Java/C++/Go/JS/Rust）",
+    "variant": "子集型回溯：每个元素选或不选",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "import json",
+        "purpose": "按题目要求输出 JSON 数组"
+      }
+    ],
+    "code": "import sys\nimport json\n\n\ndef solve(nums):\n    answer = []\n    chosen = []\n\n    def visit(index):\n        if index == len(nums):\n            answer.append(chosen.copy())\n            return\n        visit(index + 1)  # 当前元素不加入子集。\n        chosen.append(nums[index])\n        visit(index + 1)  # 当前元素加入子集。\n        chosen.pop()  # 回到进入本层时的子集。\n\n    visit(0)\n    return answer\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n    answer = solve(nums)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“子集型回溯：每个元素选或不选”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "131",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/palindrome-partitioning/solutions/2059414/hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-fues/",
+    "sourceTitle": "【视频】回溯不会写？套路在此！（Python/Java/C++/Go/JS/Rust）",
+    "variant": "枚举下一段的结束位置，回溯分割回文串",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "import json",
+        "purpose": "按题目要求输出 JSON 数组"
+      }
+    ],
+    "code": "import sys\nimport json\n\n\ndef solve(s):\n    answer = []\n    pieces = []\n\n    def visit(start):\n        if start == len(s):\n            answer.append(pieces.copy())\n            return\n        for end in range(start + 1, len(s) + 1):\n            piece = s[start:end]\n            if piece != piece[::-1]:\n                continue\n            pieces.append(piece)\n            visit(end)\n            pieces.pop()\n\n    visit(0)\n    return answer\n\n\ndef main():\n    s = sys.stdin.readline().rstrip(\"\\r\\n\")\n    answer = solve(s)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“枚举下一段的结束位置，回溯分割回文串”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "77",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/combinations/solutions/2071017/hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-65lh/",
+    "sourceTitle": "【视频讲解】回溯+剪枝优化（Python/Java/C++/Go）",
+    "variant": "倒序枚举选哪个，并按剩余数量剪枝",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "import json",
+        "purpose": "按题目要求输出 JSON 数组"
+      }
+    ],
+    "code": "import sys\nimport json\n\n\ndef solve(n, k):\n    answer = []\n    chosen = []\n\n    def visit(upper):\n        needed = k - len(chosen)\n        if needed == 0:\n            answer.append(chosen.copy())\n            return\n        # 选中的最大数至少为 needed，才有足够的小数继续选。\n        for value in range(upper, needed - 1, -1):\n            chosen.append(value)\n            visit(value - 1)\n            chosen.pop()\n\n    visit(n)\n    return answer\n\n\ndef main():\n    n, k = map(int, sys.stdin.readline().split())\n    answer = solve(n, k)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“倒序枚举选哪个，并按剩余数量剪枝”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "216",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/combination-sum-iii/solutions/2071013/hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-feme/",
+    "sourceTitle": "【视频讲解】回溯+剪枝优化（Python/Java/C++/Go）",
+    "variant": "倒序枚举选哪个，结合数量和剩余总和剪枝",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "import json",
+        "purpose": "按题目要求输出 JSON 数组"
+      }
+    ],
+    "code": "import sys\nimport json\n\n\ndef solve(k, n):\n    answer = []\n    chosen = []\n\n    def visit(upper, remaining):\n        needed = k - len(chosen)\n        largest_sum = (2 * upper - needed + 1) * needed // 2\n        if remaining < 0 or remaining > largest_sum:\n            return\n        if needed == 0:\n            answer.append(chosen.copy())\n            return\n        for value in range(upper, needed - 1, -1):\n            chosen.append(value)\n            visit(value - 1, remaining - value)\n            chosen.pop()\n\n    visit(9, n)\n    return answer\n\n\ndef main():\n    k, n = map(int, sys.stdin.readline().split())\n    answer = solve(k, n)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“倒序枚举选哪个，结合数量和剩余总和剪枝”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "22",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/generate-parentheses/solutions/2071015/hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-wcdw/",
+    "sourceTitle": "两种基本回溯思想：选或不选 / 枚举选哪个（Python/Java/C++/Go/JS/Rust）",
+    "variant": "记录左右括号数量，逐位构造合法前缀",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "import json",
+        "purpose": "按题目要求输出 JSON 数组"
+      }
+    ],
+    "code": "import sys\nimport json\n\n\ndef solve(n):\n    answer = []\n    path = [''] * (2 * n)\n\n    def visit(opened, closed):\n        if closed == n:\n            answer.append(''.join(path))\n            return\n        position = opened + closed\n        if opened < n:\n            path[position] = '('\n            visit(opened + 1, closed)\n        if closed < opened:\n            path[position] = ')'\n            visit(opened, closed + 1)\n\n    visit(0, 0)\n    return answer\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    answer = solve(n)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“记录左右括号数量，逐位构造合法前缀”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "46",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/permutations/solutions/2079585/hui-su-bu-hui-xie-tao-lu-zai-ci-jing-que-6hrh/",
+    "sourceTitle": "【视频】回溯不会写？套路在此！精确计算搜索树的节点个数！（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "排列型回溯：定长 path 与已选标记",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "import json",
+        "purpose": "按题目要求输出 JSON 数组"
+      }
+    ],
+    "code": "import sys\nimport json\n\n\ndef solve(nums):\n    size = len(nums)\n    answer = []\n    path = [0] * size\n    used = [False] * size\n\n    def visit(position):\n        if position == size:\n            answer.append(path.copy())\n            return\n        for index, value in enumerate(nums):\n            if used[index]:\n                continue\n            path[position] = value\n            used[index] = True\n            visit(position + 1)\n            used[index] = False\n\n    visit(0)\n    return answer\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n    answer = solve(nums)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“排列型回溯：定长 path 与已选标记”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "51",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/n-queens/solutions/2079586/hui-su-tao-lu-miao-sha-nhuang-hou-shi-pi-mljv/",
+    "sourceTitle": "【视频讲解】排列型回溯，简洁高效！（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "按行回溯，用列与两条对角线标记冲突",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "import json",
+        "purpose": "按题目要求输出 JSON 数组"
+      }
+    ],
+    "code": "import sys\nimport json\n\n\ndef solve(n):\n    answer = []\n    queen_columns = [0] * n\n    used_columns = [False] * n\n    used_sum = [False] * (2 * n - 1)\n    used_difference = [False] * (2 * n - 1)\n\n    def visit(row):\n        if row == n:\n            board = ['.' * column + 'Q' + '.' * (n - column - 1)\n                     for column in queen_columns]\n            answer.append(board)\n            return\n        for column in range(n):\n            diagonal_sum = row + column\n            diagonal_difference = row - column + n - 1\n            if used_columns[column] or used_sum[diagonal_sum] or used_difference[diagonal_difference]:\n                continue\n            queen_columns[row] = column\n            used_columns[column] = used_sum[diagonal_sum] = used_difference[diagonal_difference] = True\n            visit(row + 1)\n            used_columns[column] = used_sum[diagonal_sum] = used_difference[diagonal_difference] = False\n\n    visit(0)\n    return answer\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    answer = solve(n)\n    print(json.dumps(answer, ensure_ascii=False))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“按行回溯，用列与两条对角线标记冲突”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "52",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/n-queens-ii/solution/hui-su-miao-sha-nhuang-hou-yi-ge-shi-pin-l41l",
+    "sourceTitle": "【视频讲解】排列型回溯，简洁高效！附题单（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "按行回溯，用列与对角线标记并累计方案数",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      }
+    ],
+    "code": "import sys\n\n\ndef solve(n):\n    count = 0\n    used_columns = [False] * n\n    used_sum = [False] * (2 * n - 1)\n    used_difference = [False] * (2 * n - 1)\n\n    def visit(row):\n        nonlocal count\n        if row == n:\n            count += 1\n            return\n        for column in range(n):\n            diagonal_sum = row + column\n            diagonal_difference = row - column + n - 1\n            if used_columns[column] or used_sum[diagonal_sum] or used_difference[diagonal_difference]:\n                continue\n            used_columns[column] = used_sum[diagonal_sum] = used_difference[diagonal_difference] = True\n            visit(row + 1)\n            used_columns[column] = used_sum[diagonal_sum] = used_difference[diagonal_difference] = False\n\n    visit(0)\n    return count\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    answer = solve(n)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“按行回溯，用列与对角线标记并累计方案数”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "198",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/house-robber/solutions/2102725/ru-he-xiang-chu-zhuang-tai-ding-yi-he-zh-1wt1/",
+    "sourceTitle": "【视频讲解】动态规划入门：从记忆化搜索到递推（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "记忆化搜索：最后一间房选或不选",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "from functools import cache",
+        "purpose": "缓存已经计算过的房屋前缀状态，避免重复递归"
+      }
+    ],
+    "code": "import sys\nfrom functools import cache\n\n\ndef solve(nums):\n    @cache\n    def best(last):\n        # best(last) 是前 last + 1 间房屋能够取得的最大金额。\n        if last < 0:\n            return 0\n        skip = best(last - 1)\n        take = nums[last] + best(last - 2)\n        return max(skip, take)\n\n    return best(len(nums) - 1)\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n    answer = solve(nums)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“记忆化搜索：最后一间房选或不选”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。本页 n ≤ 100，递归深度随 n 线性增长；若扩展到很长的数组，应选原文的递推版本。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "494",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/target-sum/solutions/2119041/jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-s1cx/",
+    "sourceTitle": "两种方法：0-1 背包 / 折半枚举（Python/Java/C++/Go）",
+    "variant": "转成 0-1 背包计数，一维数组倒序更新",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      }
+    ],
+    "code": "import sys\n\n\ndef solve(nums, target):\n    difference = sum(nums) - abs(target)\n    if difference < 0 or difference % 2 != 0:\n        return 0\n    capacity = difference // 2\n    ways = [0] * (capacity + 1)\n    ways[0] = 1\n    for value in nums:\n        # 倒序确保每个位置只选一次；value 为 0 时会把方案数翻倍。\n        for total in range(capacity, value - 1, -1):\n            ways[total] += ways[total - value]\n    return ways[capacity]\n\n\ndef main():\n    n, target = map(int, sys.stdin.readline().split())\n    nums = list(map(int, sys.stdin.readline().split()))\n    answer = solve(nums, target)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“转成 0-1 背包计数，一维数组倒序更新”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "322",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/coin-change/solutions/2119065/jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-21m5/",
+    "sourceTitle": "两种方法：完全背包 / BFS 最短路（Python/Java/C++/Go）",
+    "variant": "完全背包求最小值，一维数组正序更新",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "from math import inf",
+        "purpose": "用正无穷表示暂时无法凑出的金额"
+      }
+    ],
+    "code": "import sys\nfrom math import inf\n\n\ndef solve(coins, amount):\n    minimum = [inf] * (amount + 1)\n    minimum[0] = 0\n    for coin in coins:\n        # 正序允许本轮已经用过的面额继续使用。\n        for total in range(coin, amount + 1):\n            minimum[total] = min(minimum[total], minimum[total - coin] + 1)\n    return -1 if minimum[amount] == inf else minimum[amount]\n\n\ndef main():\n    n, amount = map(int, sys.stdin.readline().split())\n    coins = list(map(int, sys.stdin.readline().split()))\n    answer = solve(coins, amount)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“完全背包求最小值，一维数组正序更新”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "1143",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/longest-common-subsequence/solutions/2133188/jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-lbz5/",
+    "sourceTitle": "教你一步步思考动态规划：从记忆化搜索到递推（Python/Java/C++/Go）",
+    "variant": "二维递推：比较两个前缀的最后一个字符",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      }
+    ],
+    "code": "import sys\n\n\ndef solve(text1, text2):\n    rows, columns = len(text1), len(text2)\n    length = [[0] * (columns + 1) for _ in range(rows + 1)]\n    # length[i][j] 表示 text1[:i] 与 text2[:j] 的最长公共子序列长度。\n    for i in range(1, rows + 1):\n        for j in range(1, columns + 1):\n            if text1[i - 1] == text2[j - 1]:\n                length[i][j] = length[i - 1][j - 1] + 1\n            else:\n                length[i][j] = max(length[i - 1][j], length[i][j - 1])\n    return length[rows][columns]\n\n\ndef main():\n    text1 = sys.stdin.readline().rstrip(\"\\r\\n\")\n    text2 = sys.stdin.readline().rstrip(\"\\r\\n\")\n    answer = solve(text1, text2)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“二维递推：比较两个前缀的最后一个字符”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "72",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/edit-distance/solutions/2133222/jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-uo5q/",
+    "sourceTitle": "【视频】教你一步步思考动态规划，从记忆化搜索到递推到空间优化！（Python/Java/C++/Go）",
+    "variant": "二维递推：匹配字符或执行一次插入、删除、替换",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      }
+    ],
+    "code": "import sys\n\n\ndef solve(word1, word2):\n    rows, columns = len(word1), len(word2)\n    distance = [[0] * (columns + 1) for _ in range(rows + 1)]\n    for j in range(columns + 1):\n        distance[0][j] = j  # 空串变成 word2[:j]，需要插入 j 次。\n    for i in range(1, rows + 1):\n        distance[i][0] = i\n        for j in range(1, columns + 1):\n            if word1[i - 1] == word2[j - 1]:\n                distance[i][j] = distance[i - 1][j - 1]\n            else:\n                delete = distance[i - 1][j]\n                insert = distance[i][j - 1]\n                replace = distance[i - 1][j - 1]\n                distance[i][j] = min(delete, insert, replace) + 1\n    return distance[rows][columns]\n\n\ndef main():\n    word1 = sys.stdin.readline().rstrip(\"\\r\\n\")\n    word2 = sys.stdin.readline().rstrip(\"\\r\\n\")\n    answer = solve(word1, word2)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“二维递推：匹配字符或执行一次插入、删除、替换”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "300",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/longest-increasing-subsequence/solution/jiao-ni-yi-bu-bu-si-kao-dpfu-o1-kong-jia-4zma/",
+    "sourceTitle": "【视频】三种方法：记忆化搜索/递推/二分查找（Python/Java/C++/Go）",
+    "variant": "贪心与二分：维护每种长度的最小末尾",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "from bisect import bisect_left",
+        "purpose": "二分查找第一个大于或等于当前值的位置"
+      }
+    ],
+    "code": "import sys\nfrom bisect import bisect_left\n\n\ndef solve(nums):\n    tails = []\n    for value in nums:\n        # 找第一个 >= value 的末尾；相等时替换，不会增加长度。\n        position = bisect_left(tails, value)\n        if position < len(tails):\n            tails[position] = value\n        else:\n            tails.append(value)\n    return len(tails)\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    nums = list(map(int, sys.stdin.readline().split()))\n    answer = solve(nums)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“贪心与二分：维护每种长度的最小末尾”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "122",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/solution/shi-pin-jiao-ni-yi-bu-bu-si-kao-dong-tai-o3y4/",
+    "sourceTitle": "【视频】教你一步步思考动态规划，股票问题通用解法（Python/Java/C++/Go/JS/Rust）",
+    "variant": "状态机 DP：持股与不持股的滚动递推",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "from math import inf",
+        "purpose": "用负无穷表示交易开始前不可能持有股票"
+      }
+    ],
+    "code": "import sys\nfrom math import inf\n\n\ndef solve(prices):\n    cash = 0\n    holding = -inf\n    for price in prices:\n        # 两个新状态都由前一天的状态计算。\n        next_cash = max(cash, holding + price)\n        next_holding = max(holding, cash - price)\n        cash, holding = next_cash, next_holding\n    return cash\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    prices = list(map(int, sys.stdin.readline().split()))\n    answer = solve(prices)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“状态机 DP：持股与不持股的滚动递推”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "309",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/solution/shi-pin-jiao-ni-yi-bu-bu-si-kao-dong-tai-0k0l/",
+    "sourceTitle": "【视频】教你一步步思考动态规划！股票问题通用解法！（Python/Java/C++/Go/JS/Rust）",
+    "variant": "状态机 DP：买入时引用前两天的不持股状态",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "from math import inf",
+        "purpose": "用负无穷表示交易开始前不可能持有股票"
+      }
+    ],
+    "code": "import sys\nfrom math import inf\n\n\ndef solve(prices):\n    two_days_ago_cash = 0\n    cash = 0\n    holding = -inf\n    for price in prices:\n        next_cash = max(cash, holding + price)\n        # 今天买入时，昨天不能刚卖出，因此使用前两天的现金状态。\n        next_holding = max(holding, two_days_ago_cash - price)\n        two_days_ago_cash = cash\n        cash, holding = next_cash, next_holding\n    return cash\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    prices = list(map(int, sys.stdin.readline().split()))\n    answer = solve(prices)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“状态机 DP：买入时引用前两天的不持股状态”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "188",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/solution/shi-pin-jiao-ni-yi-bu-bu-si-kao-dong-tai-kksg/",
+    "sourceTitle": "【视频】教你一步步思考动态规划！股票问题通用解法！（Python/Java/C++/Go/JS/Rust）",
+    "variant": "至多 k 笔交易：倒序更新交易次数的状态机 DP",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      },
+      {
+        "code": "from math import inf",
+        "purpose": "用负无穷标记不可能的持股或交易次数状态"
+      }
+    ],
+    "code": "import sys\nfrom math import inf\n\n\ndef solve(prices, k):\n    # state[j] 对应至多买入 j - 1 次；下标 0 留作不可能状态。\n    state = [[-inf, -inf] for _ in range(k + 2)]\n    for j in range(1, k + 2):\n        state[j][0] = 0\n    for price in prices:\n        # 倒序保证买入时读到的 state[j - 1] 仍属于前一天。\n        for j in range(k + 1, 0, -1):\n            state[j][0] = max(state[j][0], state[j][1] + price)\n            state[j][1] = max(state[j][1], state[j - 1][0] - price)\n    return state[k + 1][0]\n\n\ndef main():\n    n, k = map(int, sys.stdin.readline().split())\n    prices = list(map(int, sys.stdin.readline().split()))\n    answer = solve(prices, k)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“至多 k 笔交易：倒序更新交易次数的状态机 DP”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "516",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/longest-palindromic-subsequence/solution/shi-pin-jiao-ni-yi-bu-bu-si-kao-dong-tai-kgkg/",
+    "sourceTitle": "【视频】教你一步步思考动态规划：从记忆化搜索到递推到空间优化！（Python/Java/C++/Go）",
+    "variant": "区间 DP：左端点倒序、右端点正序递推",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      }
+    ],
+    "code": "import sys\n\n\ndef solve(s):\n    size = len(s)\n    longest = [[0] * size for _ in range(size)]\n    for left in range(size - 1, -1, -1):\n        longest[left][left] = 1\n        for right in range(left + 1, size):\n            if s[left] == s[right]:\n                longest[left][right] = longest[left + 1][right - 1] + 2\n            else:\n                longest[left][right] = max(longest[left + 1][right], longest[left][right - 1])\n    return longest[0][size - 1]\n\n\ndef main():\n    s = sys.stdin.readline().rstrip(\"\\r\\n\")\n    answer = solve(s)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“区间 DP：左端点倒序、右端点正序递推”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  },
+  {
+    "id": "1039",
+    "author": "灵茶山艾府",
+    "sourceUrl": "https://leetcode.cn/problems/minimum-score-triangulation-of-polygon/solution/shi-pin-jiao-ni-yi-bu-bu-si-kao-dong-tai-aty6/",
+    "sourceTitle": "【视频】教你一步步思考动态规划，从记忆化搜索到递推（Python/Java/C++/C/Go/JS/Rust）",
+    "variant": "区间 DP：枚举与区间两端组成三角形的第三个顶点",
+    "imports": [
+      {
+        "code": "import sys",
+        "purpose": "从标准输入读取本题数据"
+      }
+    ],
+    "code": "import sys\n\n\ndef solve(values):\n    size = len(values)\n    score = [[0] * size for _ in range(size)]\n    for left in range(size - 3, -1, -1):\n        for right in range(left + 2, size):\n            score[left][right] = min(\n                score[left][middle] + score[middle][right]\n                + values[left] * values[middle] * values[right]\n                for middle in range(left + 1, right)\n            )\n    return score[0][size - 1]\n\n\ndef main():\n    n = int(sys.stdin.readline())\n    values = list(map(int, sys.stdin.readline().split()))\n    answer = solve(values)\n    print(answer)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "note": "按作者题解中“区间 DP：枚举与区间两端组成三角形的第三个顶点”的思路改编，输入输出适配本页约定；ACM 封装与注释为本站整理。",
+    "verifiedAt": "2026-09-15"
+  }
+]

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#243e73"><title>公司笔试手册 · Python</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23243e73'/%3E%3Ctext x='14' y='45' font-size='40' fill='white'%3E册%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">跳到正文</a>
+<header class="topbar"><a class="brand" href="./"><span class="brand-mark">册</span><span>公司笔试手册<small>理解一道，再写一道</small></span></a><a class="back-link" href="../">基础算法练习台 ↗</a></header>
+<div class="layout">
+<aside class="sidebar">
+  <div class="sidebar-heading"><h2>我的题库</h2><span id="total">2 题</span></div>
+  <label class="search-wrap"><span>搜索题目</span><input type="search" id="search" placeholder="题名 / 算法 / 公司" autocomplete="off"></label>
+  <nav aria-label="公司与场次"><details open><summary>滴滴 <span>2 题</span></summary><p class="session">2026 年 9 月 6 日</p><div id="problem-list"></div></details></nav>
+  <p id="empty-search" hidden>没有找到匹配题目，试试“双指针”。</p>
+  <div class="study-progress"><span>本场学习进度</span><strong id="progress">0 / 2</strong><progress id="progress-bar" max="2" value="0" aria-label="本场已完成题目数"></progress><p>能独立写出后，再标记完成。</p></div>
+  <div class="directory-note"><strong>按公司，按场次积累</strong><p>每题都有讲解、完整代码和测试数据，文件也按相同目录存放。</p><a href="README.md" download>下载题库说明</a></div>
+</aside>
+<main id="content">
+<div id="load-error" role="alert" hidden></div>
+<div id="problem-content" hidden>
+  <div class="breadcrumb">公司笔试 <span>/</span> 滴滴 <span>/</span> 2026-09-06</div>
+  <header class="problem-header"><div><div class="problem-kicker" id="problem-kicker"></div><h1 id="title"></h1><p class="summary" id="summary"></p><div class="tags"><span id="topic"></span><span id="complexity"></span><span>Python 3</span></div></div><button id="complete" class="complete" aria-pressed="false">标记已完成</button></header>
+  <div class="insight"><span aria-hidden="true">✳</span><div><small>这道题，先记住一句话</small><strong id="insight"></strong></div></div>
+  <div class="tabs" role="tablist" aria-label="学习与练习"><button id="tab-learn" role="tab" aria-controls="learn-panel" aria-selected="true">题目与推导</button><button id="tab-demo" role="tab" aria-controls="demo-panel" aria-selected="false" tabindex="-1">动手看过程</button><button id="tab-practice" role="tab" aria-controls="practice-panel" aria-selected="false" tabindex="-1">Python 练习</button></div>
+  <section id="learn-panel" role="tabpanel" aria-labelledby="tab-learn"><nav id="reading-shortcuts" class="reading-shortcuts" aria-label="讲解分区"></nav><div class="reading-layout"><article id="lesson" class="lesson"></article><aside class="reading-guide"><h2>阅读路线</h2><nav id="toc" aria-label="本题讲解目录"></nav><div class="source-note"><strong>题源与文件</strong><a id="source" target="_blank" rel="noreferrer">查看微信原文 ↗</a><a id="download-original" download>下载原始完整题目 .md</a><a id="download-note" download>下载完整讲解 .md</a><a id="download-source" download>下载 Python 解法</a><p>微信公众号：塔子哥学算法<br>第三方整理题源<br>核对日期：2026-09-19</p></div></aside></div></section>
+  <section id="demo-panel" role="tabpanel" aria-labelledby="tab-demo" hidden><div class="demo-intro"><h2>把公式变成一次具体操作</h2><p id="demo-description"></p></div><div id="demo"></div><p class="demo-footer">演示只用小样例帮助理解。完整复杂度、边界和证明在「题目与推导」中。</p></section>
+  <section id="practice-panel" role="tabpanel" aria-labelledby="tab-practice" hidden>
+    <div class="practice-heading"><p>读入和输出已经写好，补上中间的算法。</p><div><span id="runtime-status" role="status">Python 尚未加载</span><button id="retry" hidden>重新加载</button></div></div>
+    <div class="editors">
+      <div class="draft-column"><div class="panel-heading"><h2>我的尝试</h2><span id="save-status" role="status">每题单独保存</span></div><textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-label="我的 Python 代码"></textarea><div class="editor-actions"><button id="download-draft">下载我的代码</button><span>Tab 缩进 · ⌘/Ctrl Enter 运行</span></div><div class="run-actions"><button id="run-all" disabled>验证全部用例</button><button class="primary" id="run" disabled>运行我的代码</button></div></div>
+      <div class="reference-column"><details id="reference-details"><summary>查看带注释的完整解法 <span>只读</span></summary><textarea id="reference" spellcheck="false" wrap="off" readonly aria-label="完整 Python 参考代码"></textarea><div class="editor-actions"><button id="copy-reference">复制参考</button><a id="reference-download" download>下载参考</a></div></details><p class="reference-hint">先尝试独立完成，再打开参考对照。参考运行使用单独的代码区。</p><div class="run-actions"><button id="run-reference" disabled>运行参考</button><button id="verify-reference" disabled>验证参考</button></div><div id="copy-status" role="status"></div></div>
+    </div>
+    <div class="test-heading"><h2>测试输入</h2><select id="sample" aria-label="载入测试用例"></select></div><div class="io-grid"><label>标准输入<textarea id="stdin" spellcheck="false"></textarea></label><label>预期输出<textarea id="expected" spellcheck="false"></textarea></label></div>
+    <div class="result-heading"><h2 id="result-title">运行结果</h2><button id="stop" hidden>停止运行</button></div><pre id="result" role="status">运行后在这里查看输出。</pre><p class="runtime-note">每组限时 3 秒，按空白分隔比较输出。内置用例用于练习，不代表官方评测。Python 首次加载需要联网；下载代码可用本机 Python 运行。</p>
+  </section>
+  <footer class="page-footer"><span>从理解到独立完成，留下一份可复习的笔记。</span><button id="next-problem">下一题</button></footer>
+</div>
+</main>
+</div><script type="module" src="app.js"></script>
+</body></html>
